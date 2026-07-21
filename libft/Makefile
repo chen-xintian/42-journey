@@ -6,11 +6,11 @@
 #    By: chenx <chenx@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/07/21 09:18:48 by chenx             #+#    #+#              #
-#    Updated: 2026/07/21 14:28:56 by chenx            ###   ########.fr        #
+#    Updated: 2026/07/21 16:17:10 by chenx            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC	= cc
+CC		= cc
 FLAGS	= -Wall -Wextra -Werror
 NAME	= libft.a
 
