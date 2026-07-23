@@ -6,16 +6,61 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/21 17:07:29 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/23 12:08:54 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//----------for fr_bzero.c-----------//
+#include "libft.h"
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
+#include <unistd.h>
+
+//---------- Prototypes ----------//
+
+static void	test_ft_isalpha(void);
+static void	test_ft_isdigit(void);
+static void	test_ft_isalnum(void);
+static void	test_ft_isascii(void);
+static void	test_ft_isprint(void);
+static void	test_ft_strlen(void);
+static void	test_ft_memset(void);
+static void	test_ft_bzero(void);
+static void	test_ft_memcpy(void);
+static void	test_ft_memmove(void);
+
+//---------- Main ----------//
 
 int	main(void)
+{
+	test_ft_isalpha();
+	test_ft_isdigit();
+	test_ft_isalnum();
+	test_ft_isascii();
+	test_ft_isprint();
+	test_ft_strlen();
+	test_ft_memset();
+	test_ft_bzero();
+	test_ft_memcpy();
+	test_ft_memmove();
+	return (0);
+}
+
+//-----------for ft_isalpha.c-----------//
+static void	test_ft_isalpha(void)
+{
+	char	test;
+
+	test = '#';
+	write(1, "Testing ft_isalpha:\n", 20);
+	write(1, "Is test alpha? ", 15);
+	if (ft_isalpha(test))
+		write(1, "Yes\n", 4);
+	else
+		write(1, "No\n", 3);
+}
+//----------for ft_bzero.c-----------//
+static void	test_ft_bzero(void)
 {
 	char	std[20] = "Hello 42!";
 	char	ft[20] = "Hello 42!";
@@ -56,12 +101,10 @@ int	main(void)
 		printf("\nPASS ✅\n");
 	else
 		printf("\nFAIL ❌\n");
-
-	return (0);
 }
 
 //---------for ft_isalnum.c---------//
-int	main(void)
+static void	test_ft_isalnum(void)
 {
 	char	test;
 
@@ -72,26 +115,11 @@ int	main(void)
 		write(1, "Yes\n", 4);
 	else
 		write(1, "No\n", 3);
-	return (0);
 }
 
-//-----------for ft_isalpha.c-----------//
-int	main(void)
-{
-	char	test;
-
-	test = '#';
-	write(1, "Testing ft_isalpha:\n", 20);
-	write(1, "Is test alpha? ", 15);
-	if (ft_isalpha(test))
-		write(1, "Yes\n", 4);
-	else
-		write(1, "No\n", 3);
-	return (0);
-}
 
 //-----------for ft_isascii.c-----------//
-int	main(void)
+static void	test_ft_isascii(void)
 {
 	char	test;
 
@@ -102,11 +130,10 @@ int	main(void)
 		write(1, "Yes\n", 4);
 	else
 		write(1, "No\n", 3);
-	return (0);
 }
 
 //-----------for ft_isdigit.c-----------//
-int	main(void)
+static void	test_ft_isdigit(void)
 {
 	char	test;
 
@@ -117,11 +144,10 @@ int	main(void)
 		write(1, "Yes\n", 4);
 	else
 		write(1, "No\n", 3);
-	return (0);
 }
 
 //-----------for ft_isprint.c-----------//
-int	main(void)
+static void	test_ft_isprint(void)
 {
 	char	test;
 
@@ -132,15 +158,10 @@ int	main(void)
 		write(1, "Yes\n", 4);
 	else
 		write(1, "No\n", 3);
-	return (0);
 }
 
 //-----------for ft_memcpy.c-----------//
-#include <stdio.h>
-#include <string.h>
-#include "libft.h"
-
-int	main(void)
+static void	test_ft_memcpy(void)
 {
 	char	src[] = "Hello 42!";
 	char	std[20];
@@ -235,15 +256,10 @@ int	main(void)
 		printf("PASS\n");
 	else
 		printf("FAIL\n");
-
-	return (0);
 }
 
 //-----------for ft_memset.c-----------//
-#include <unistd.h> 
-#include <stdio.h>
-#include <string.h>
-int		main(void)
+static void	test_ft_memset(void)
 {
 	char	std[20] = "Hello World!";
 	char	ft[20] = "Hello World!";
@@ -313,16 +329,10 @@ int		main(void)
 		printf("PASS\n");
 	else
 		printf("FAIL\n");
-
-	return (0);
 }
 
 //-----------for ft_strlen.c-----------//
-#include <stdio.h>
-#include <string.h>
-#include "libft.h"
-
-int	main(void)
+static void	test_ft_strlen(void)
 {
 	const char	*test1 = "Hello Wingstop!";
 	const char	*test2 = "";
@@ -371,6 +381,68 @@ int	main(void)
 		printf("PASS\n");
 	else
 		printf("FAIL\n");
+}
 
-	return (0);
+//-----------for ft_memmove.c-----------//
+
+static void	test_ft_memmove(void)
+{
+	char	std1[30] = "Hello 42 Singapore!";
+	char	ft1[30] = "Hello 42 Singapore!";
+	char	std2[30] = "abcdef";
+	char	ft2[30] = "abcdef";
+	char	std3[30] = "abcdef";
+	char	ft3[30] = "abcdef";
+	char	*ret_std;
+	char	*ret_ft;
+
+	printf("========== Test 1: Normal Copy ==========\n");
+
+	ret_std = memmove(std1, std1 + 6, 12);
+	ret_ft = ft_memmove(ft1, ft1 + 6, 12);
+
+	printf("memmove    : %s\n", std1);
+	printf("ft_memmove : %s\n", ft1);
+
+	if (strcmp(std1, ft1) == 0)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
+
+	printf("\n========== Test 2: Overlap (dest > src) ==========\n");
+
+	memmove(std2 + 2, std2, 4);
+	ft_memmove(ft2 + 2, ft2, 4);
+
+	printf("memmove    : %s\n", std2);
+	printf("ft_memmove : %s\n", ft2);
+
+	if (strcmp(std2, ft2) == 0)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
+
+	printf("\n========== Test 3: Overlap (dest < src) ==========\n");
+
+	memmove(std3, std3 + 2, 4);
+	ft_memmove(ft3, ft3 + 2, 4);
+
+	printf("memmove    : %s\n", std3);
+	printf("ft_memmove : %s\n", ft3);
+
+	if (strcmp(std3, ft3) == 0)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
+
+	printf("\n========== Test 4: Return Value ==========\n");
+
+	printf("Original address : %p\n", (void *)ft1);
+	printf("memmove returned : %p\n", (void *)ret_std);
+	printf("ft_memmove ret   : %p\n", (void *)ret_ft);
+
+	if (ret_ft == ft1)
+		printf("PASS\n");
+	else
+		printf("FAIL\n");
 }
