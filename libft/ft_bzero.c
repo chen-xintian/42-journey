@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:37:00 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/21 16:56:18 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/23 11:38:46 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	ft_bzero(void *s, size_t n)
 {
 	size_t	i;
-	char	*ptr;
+	unsigned char	*ptr;
 
-	ptr = (char *)s;
+	ptr = (unsigned char *)s;
 	i = 0;
 	while (i < n)
 	{
