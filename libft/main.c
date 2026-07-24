@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 19:58:39 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/24 20:19:53 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	test_ft_memcpy(void);
 static void	test_ft_memmove(void);
 static void	test_ft_atoi(void);
 static void test_ft_strlcat(void);
+static void test_ft_toupper(void);
 
 //---------- Main ----------//
 
@@ -49,6 +50,7 @@ int	main(void)
 	test_ft_bzero();
 	test_ft_memcpy();
 	test_ft_memmove();
+	test_ft_toupper();
 	test_ft_atoi();
 	return (0);
 }
@@ -724,6 +726,101 @@ static void	test_ft_strlcat(void)
 	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
 
 	if (strcmp(std, ft) == 0 && std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+}
+
+// ======================================== //
+//                ft_toupper                //
+// ======================================== //
+
+static void	test_ft_toupper(void)
+{
+	int	std;
+	int	ft;
+	int	test;
+
+	printf("========================================\n");
+	printf("               ft_toupper               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Lowercase letter\n");
+
+	test = 'a';
+	std = toupper(test);
+	ft = ft_toupper(test);
+
+	printf("Input         : '%c'\n", test);
+	printf("toupper       : '%c'\n", std);
+	printf("ft_toupper    : '%c'\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: Uppercase letter\n");
+
+	test = 'Z';
+	std = toupper(test);
+	ft = ft_toupper(test);
+
+	printf("Input         : '%c'\n", test);
+	printf("toupper       : '%c'\n", std);
+	printf("ft_toupper    : '%c'\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: Digit\n");
+
+	test = '5';
+	std = toupper(test);
+	ft = ft_toupper(test);
+
+	printf("Input         : '%c'\n", test);
+	printf("toupper       : '%c'\n", std);
+	printf("ft_toupper    : '%c'\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 4
+	printf("\nTest 4: Symbol\n");
+
+	test = '#';
+	std = toupper(test);
+	ft = ft_toupper(test);
+
+	printf("Input         : '%c'\n", test);
+	printf("toupper       : '%c'\n", std);
+	printf("ft_toupper    : '%c'\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 5
+	printf("\nTest 5: Newline character\n");
+
+	test = '\n';
+	std = toupper(test);
+	ft = ft_toupper(test);
+
+	printf("Input         : '\\n'\n");
+	printf("toupper       : %d\n", std);
+	printf("ft_toupper    : %d\n", ft);
+
+	if (std == ft)
 		printf("PASS ✅\n");
 	else
 		printf("FAIL ❌\n");
