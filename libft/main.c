@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 18:14:15 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/24 19:58:39 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	test_ft_bzero(void);
 static void	test_ft_memcpy(void);
 static void	test_ft_memmove(void);
 static void	test_ft_atoi(void);
+static void test_ft_strlcat(void);
 
 //---------- Main ----------//
 
@@ -43,6 +44,7 @@ int	main(void)
 	test_ft_isprint();
 	test_ft_strlen();
 	test_ft_strlcpy();
+	test_ft_strlcat();
 	test_ft_memset();
 	test_ft_bzero();
 	test_ft_memcpy();
@@ -580,6 +582,145 @@ static void	test_ft_strlcpy(void)
 	printf("Source       : \"%s\"\n", src);
 	printf("strlcpy      : \"%s\"\n", std);
 	printf("ft_strlcpy   : \"%s\"\n", ft);
+	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
+
+	if (strcmp(std, ft) == 0 && std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+}
+
+// ======================================== //
+//                ft_strlcat                 //
+// ======================================== //
+
+static void	test_ft_strlcat(void)
+{
+	char		std[20];
+	char		ft[20];
+	const char	*src;
+	size_t		std_ret;
+	size_t		ft_ret;
+
+	printf("========================================\n");
+	printf("               ft_strlcat               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Normal concatenation\n");
+
+	strcpy(std, "Hello ");
+	strcpy(ft, "Hello ");
+	src = "42!";
+
+	std_ret = strlcat(std, src, sizeof(std));
+	ft_ret = ft_strlcat(ft, src, sizeof(ft));
+
+	printf("Destination  : Hello \n");
+	printf("Source       : %s\n", src);
+	printf("strlcat      : %s\n", std);
+	printf("ft_strlcat   : %s\n", ft);
+	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
+
+	if (strcmp(std, ft) == 0 && std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: Destination buffer too small\n");
+
+	strcpy(std, "42");
+	strcpy(ft, "42");
+	src = "Singapore!";
+
+	std_ret = strlcat(std, src, sizeof(std));
+	ft_ret = ft_strlcat(ft, src, sizeof(ft));
+
+	printf("Destination  : 42\n");
+	printf("Source       : %s\n", src);
+	printf("strlcat      : %s\n", std);
+	printf("ft_strlcat   : %s\n", ft);
+	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
+
+	if (strcmp(std, ft) == 0 && std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: Destination size = 0\n");
+
+	strcpy(std, "Hello");
+	strcpy(ft, "Hello");
+	src = "42";
+
+	std_ret = strlcat(std, src, 0);
+	ft_ret = ft_strlcat(ft, src, 0);
+
+	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
+
+	if (std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 4
+	printf("\nTest 4: Empty source string\n");
+
+	strcpy(std, "Hello");
+	strcpy(ft, "Hello");
+	src = "";
+
+	std_ret = strlcat(std, src, sizeof(std));
+	ft_ret = ft_strlcat(ft, src, sizeof(ft));
+
+	printf("Destination  : Hello\n");
+	printf("Source       : \"%s\"\n", src);
+	printf("strlcat      : %s\n", std);
+	printf("ft_strlcat   : %s\n", ft);
+	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
+
+	if (strcmp(std, ft) == 0 && std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 5
+	printf("\nTest 5: Empty destination string\n");
+
+	std[0] = '\0';
+	ft[0] = '\0';
+	src = "Hello 42!";
+
+	std_ret = strlcat(std, src, sizeof(std));
+	ft_ret = ft_strlcat(ft, src, sizeof(ft));
+
+	printf("Destination  : \"\"\n");
+	printf("Source       : %s\n", src);
+	printf("strlcat      : %s\n", std);
+	printf("ft_strlcat   : %s\n", ft);
+	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
+
+	if (strcmp(std, ft) == 0 && std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 6
+	printf("\nTest 6: Destination already full\n");
+
+	strcpy(std, "Hello");
+	strcpy(ft, "Hello");
+	src = "42";
+
+	std_ret = strlcat(std, src, 5);
+	ft_ret = ft_strlcat(ft, src, 5);
+
+	printf("Destination  : Hello\n");
+	printf("Source       : %s\n", src);
+	printf("strlcat      : %s\n", std);
+	printf("ft_strlcat   : %s\n", ft);
 	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
 
 	if (strcmp(std, ft) == 0 && std_ret == ft_ret)
