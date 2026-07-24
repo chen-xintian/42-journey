@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 21:41:16 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/24 22:05:34 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void	test_ft_isascii(void);
 static void	test_ft_isprint(void);
 static void	test_ft_strlen(void);
 static void test_ft_strlcpy(void);
+static void test_ft_strchr(void);
+static void test_ft_strrchr(void);
 static void	test_ft_memset(void);
 static void	test_ft_bzero(void);
 static void	test_ft_memcpy(void);
@@ -45,6 +47,8 @@ int	main(void)
 	test_ft_isascii();
 	test_ft_isprint();
 	test_ft_strlen();
+	test_ft_strchr();
+	test_ft_strrchr();
 	test_ft_strlcpy();
 	test_ft_strlcat();
 	test_ft_memset();
@@ -446,6 +450,221 @@ static void	test_ft_memset(void)
 	printf("ft_memset    : %p\n", (void *)ret_ft);
 
 	if (ret_std == std && ret_ft == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+}
+
+// ======================================== //
+//                ft_strchr                 //
+// ======================================== //
+
+static void	test_ft_strchr(void)
+{
+	const char	*str;
+	const char	*std;
+	const char	*ft;
+	char		test;
+
+	printf("========================================\n");
+	printf("                ft_strchr               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Character exists\n");
+
+	str = "Hello 42!";
+	test = '4';
+
+	std = strchr(str, test);
+	ft = ft_strchr(str, test);
+
+	printf("String        : %s\n", str);
+	printf("Character     : '%c'\n", test);
+	printf("strchr        : %s\n", std);
+	printf("ft_strchr     : %s\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: Character does not exist\n");
+
+	test = 'x';
+
+	std = strchr(str, test);
+	ft = ft_strchr(str, test);
+
+	printf("String        : %s\n", str);
+	printf("Character     : '%c'\n", test);
+	printf("strchr        : %p\n", (void *)std);
+	printf("ft_strchr     : %p\n", (void *)ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: First character\n");
+
+	test = 'H';
+
+	std = strchr(str, test);
+	ft = ft_strchr(str, test);
+
+	printf("String        : %s\n", str);
+	printf("Character     : '%c'\n", test);
+	printf("strchr        : %s\n", std);
+	printf("ft_strchr     : %s\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 4
+	printf("\nTest 4: Null terminator\n");
+
+	test = '\0';
+
+	std = strchr(str, test);
+	ft = ft_strchr(str, test);
+
+	printf("String        : %s\n", str);
+	printf("Character     : '\\0'\n");
+	printf("Offset        : %ld | %ld\n", std - str, ft - str);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 5
+	printf("\nTest 5: Empty string\n");
+
+	str = "";
+	test = 'A';
+
+	std = strchr(str, test);
+	ft = ft_strchr(str, test);
+
+	printf("String        : \"%s\"\n", str);
+	printf("Character     : '%c'\n", test);
+	printf("strchr        : %p\n", (void *)std);
+	printf("ft_strchr     : %p\n", (void *)ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+}
+
+// ======================================== //
+//                ft_strrchr                //
+// ======================================== //
+
+static void	test_ft_strrchr(void)
+{
+	const char	*str;
+	const char	*std;
+	const char	*ft;
+	char		test;
+
+	printf("========================================\n");
+	printf("               ft_strrchr               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Character appears multiple times\n");
+
+	str = "Hello 42 Hello!";
+	test = 'l';
+
+	std = strrchr(str, test);
+	ft = ft_strrchr(str, test);
+
+	printf("String        : %s\n", str);
+	printf("Character     : '%c'\n", test);
+	printf("strrchr       : %s\n", std);
+	printf("ft_strrchr    : %s\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: Character does not exist\n");
+
+	test = 'x';
+
+	std = strrchr(str, test);
+	ft = ft_strrchr(str, test);
+
+	printf("String        : %s\n", str);
+	printf("Character     : '%c'\n", test);
+	printf("strrchr       : %p\n", (void *)std);
+	printf("ft_strrchr    : %p\n", (void *)ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: Last character\n");
+
+	str = "Hello!";
+	test = '!';
+
+	std = strrchr(str, test);
+	ft = ft_strrchr(str, test);
+
+	printf("String        : %s\n", str);
+	printf("Character     : '%c'\n", test);
+	printf("strrchr       : %s\n", std);
+	printf("ft_strrchr    : %s\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 4
+	printf("\nTest 4: Null terminator\n");
+
+	test = '\0';
+
+	std = strrchr(str, test);
+	ft = ft_strrchr(str, test);
+
+	printf("String        : %s\n", str);
+	printf("Character     : '\\0'\n");
+	printf("Offset        : %ld | %ld\n", std - str, ft - str);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 5
+	printf("\nTest 5: Empty string\n");
+
+	str = "";
+	test = 'A';
+
+	std = strrchr(str, test);
+	ft = ft_strrchr(str, test);
+
+	printf("String        : \"%s\"\n", str);
+	printf("Character     : '%c'\n", test);
+	printf("strrchr       : %p\n", (void *)std);
+	printf("ft_strrchr    : %p\n", (void *)ft);
+
+	if (std == ft)
 		printf("PASS ✅\n");
 	else
 		printf("FAIL ❌\n");
