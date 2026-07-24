@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 15:45:44 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 13:29:51 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/24 18:14:44 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int		ft_isprint(int c);
 size_t	ft_strlen(const char *str);
 // char	*ft_strchr(const char *str, int c);
 // char	*ft_strrchr(const char *str, int c);
-// size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-// size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
+size_t	ft_strlcpy(char *dest, const char *src, size_t destsize);
+// size_t	ft_strlcat(char *dest, const char *src, size_t destsize);
 // int		ft_strncmp(const char *s1, const char *s2, size_t n);
 // char	*ft_strnstr(const char *s1, const char *s2, size_t n);
 // char	*ft_strdup(const char *s1);
@@ -75,7 +75,7 @@ void	*ft_memmove(void *dest, const void *src, size_t len);
 // void	*ft_calloc(size_t count, size_t size);
 
 // --------------------------------NUMBERS--------------------------------- //
-// int		ft_atoi(const char *str);
+int		ft_atoi(const char *str);
 // char	*ft_itoa(int n);
 
 #endif
