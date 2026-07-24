@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 22:05:34 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/24 22:27:35 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	test_ft_strlen(void);
 static void test_ft_strlcpy(void);
 static void test_ft_strchr(void);
 static void test_ft_strrchr(void);
+static void test_ft_strncmp(void);
 static void	test_ft_memset(void);
 static void	test_ft_bzero(void);
 static void	test_ft_memcpy(void);
@@ -51,6 +52,7 @@ int	main(void)
 	test_ft_strrchr();
 	test_ft_strlcpy();
 	test_ft_strlcat();
+	test_ft_strncmp();
 	test_ft_memset();
 	test_ft_bzero();
 	test_ft_memcpy();
@@ -663,6 +665,117 @@ static void	test_ft_strrchr(void)
 	printf("Character     : '%c'\n", test);
 	printf("strrchr       : %p\n", (void *)std);
 	printf("ft_strrchr    : %p\n", (void *)ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+}
+
+// ======================================== //
+//                ft_strncmp                //
+// ======================================== //
+
+static void	test_ft_strncmp(void)
+{
+	const char	*s1;
+	const char	*s2;
+	int			std;
+	int			ft;
+
+	printf("========================================\n");
+	printf("               ft_strncmp               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Equal strings\n");
+
+	s1 = "Hello 42!";
+	s2 = "Hello 42!";
+
+	std = strncmp(s1, s2, 20);
+	ft = ft_strncmp(s1, s2, 20);
+
+	printf("String 1      : %s\n", s1);
+	printf("String 2      : %s\n", s2);
+	printf("strncmp       : %d\n", std);
+	printf("ft_strncmp    : %d\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: Different strings\n");
+
+	s1 = "Hello";
+	s2 = "Hemlo";
+
+	std = strncmp(s1, s2, 5);
+	ft = ft_strncmp(s1, s2, 5);
+
+	printf("String 1      : %s\n", s1);
+	printf("String 2      : %s\n", s2);
+	printf("strncmp       : %d\n", std);
+	printf("ft_strncmp    : %d\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: n = 0\n");
+
+	s1 = "Hello";
+	s2 = "World";
+
+	std = strncmp(s1, s2, 0);
+	ft = ft_strncmp(s1, s2, 0);
+
+	printf("String 1      : %s\n", s1);
+	printf("String 2      : %s\n", s2);
+	printf("strncmp       : %d\n", std);
+	printf("ft_strncmp    : %d\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 4
+	printf("\nTest 4: Prefix comparison\n");
+
+	s1 = "Hello";
+	s2 = "Help!";
+
+	std = strncmp(s1, s2, 3);
+	ft = ft_strncmp(s1, s2, 3);
+
+	printf("String 1      : %s\n", s1);
+	printf("String 2      : %s\n", s2);
+	printf("strncmp       : %d\n", std);
+	printf("ft_strncmp    : %d\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 5
+	printf("\nTest 5: One string shorter\n");
+
+	s1 = "Hi";
+	s2 = "High";
+
+	std = strncmp(s1, s2, 5);
+	ft = ft_strncmp(s1, s2, 5);
+
+	printf("String 1      : %s\n", s1);
+	printf("String 2      : %s\n", s2);
+	printf("strncmp       : %d\n", std);
+	printf("ft_strncmp    : %d\n", ft);
 
 	if (std == ft)
 		printf("PASS ✅\n");
