@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 15:18:49 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/24 18:14:15 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ static void	test_ft_isalnum(void);
 static void	test_ft_isascii(void);
 static void	test_ft_isprint(void);
 static void	test_ft_strlen(void);
+static void test_ft_strlcpy(void);
 static void	test_ft_memset(void);
 static void	test_ft_bzero(void);
 static void	test_ft_memcpy(void);
 static void	test_ft_memmove(void);
+static void	test_ft_atoi(void);
 
 //---------- Main ----------//
 
@@ -40,10 +42,12 @@ int	main(void)
 	test_ft_isascii();
 	test_ft_isprint();
 	test_ft_strlen();
+	test_ft_strlcpy();
 	test_ft_memset();
 	test_ft_bzero();
 	test_ft_memcpy();
 	test_ft_memmove();
+	test_ft_atoi();
 	return (0);
 }
 
@@ -502,6 +506,88 @@ static void	test_ft_strlen(void)
 		printf("FAIL ❌\n");
 }
 
+// ======================================== //
+//                ft_strlcpy                 //
+// ======================================== //
+
+static void	test_ft_strlcpy(void)
+{
+	char	std[20];
+	char	ft[20];
+	const char	*src;
+	size_t	std_ret;
+	size_t	ft_ret;
+
+	printf("========================================\n");
+	printf("               ft_strlcpy               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Normal copy\n");
+
+	src = "Hello 42!";
+
+	std_ret = strlcpy(std, src, sizeof(std));
+	ft_ret = ft_strlcpy(ft, src, sizeof(ft));
+
+	printf("Source       : %s\n", src);
+	printf("strlcpy      : %s\n", std);
+	printf("ft_strlcpy   : %s\n", ft);
+	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
+
+	if (strcmp(std, ft) == 0 && std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: Destination too small\n");
+
+	std_ret = strlcpy(std, src, 5);
+	ft_ret = ft_strlcpy(ft, src, 5);
+
+	printf("Source       : %s\n", src);
+	printf("strlcpy      : %s\n", std);
+	printf("ft_strlcpy   : %s\n", ft);
+	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
+
+	if (strcmp(std, ft) == 0 && std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: Destination size = 0\n");
+
+	std_ret = strlcpy(std, src, 0);
+	ft_ret = ft_strlcpy(ft, src, 0);
+
+	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
+
+	if (std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 4
+	printf("\nTest 4: Empty source string\n");
+
+	src = "";
+
+	std_ret = strlcpy(std, src, sizeof(std));
+	ft_ret = ft_strlcpy(ft, src, sizeof(ft));
+
+	printf("Source       : \"%s\"\n", src);
+	printf("strlcpy      : \"%s\"\n", std);
+	printf("ft_strlcpy   : \"%s\"\n", ft);
+	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
+
+	if (strcmp(std, ft) == 0 && std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+}
+
 //==================================================//
 //                     ft_memmove                    //
 //==================================================//
@@ -571,6 +657,67 @@ static void	test_ft_memmove(void)
 	printf("ft_memmove   : %p\n", (void *)ret_ft);
 
 	if (ret_std == std1 && ret_ft == ft1)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+}
+
+//==================================================//
+//                     ft_atoi                       //
+//==================================================//
+static void	test_ft_atoi(void)
+{
+	const char	*test1 = "5201314";
+	const char	*test2 = "   -42";
+	const char	*test3 = "42 Singapore!";
+	int			std;
+	int			ft;
+
+	printf("========================================\n");
+	printf("               ft_atoi\n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Positive number\n");
+
+	std = atoi(test1);
+	ft = ft_atoi(test1);
+
+	printf("Input        : \"%s\"\n", test1);
+	printf("atoi         : %d\n", std);
+	printf("ft_atoi      : %d\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: Leading spaces and negative sign\n");
+
+	std = atoi(test2);
+	ft = ft_atoi(test2);
+
+	printf("Input        : \"%s\"\n", test2);
+	printf("atoi         : %d\n", std);
+	printf("ft_atoi      : %d\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: Stop at first non-digit\n");
+
+	std = atoi(test3);
+	ft = ft_atoi(test3);
+
+	printf("Input        : \"%s\"\n", test3);
+	printf("atoi         : %d\n", std);
+	printf("ft_atoi      : %d\n", ft);
+
+	if (std == ft)
 		printf("PASS ✅\n");
 	else
 		printf("FAIL ❌\n");
