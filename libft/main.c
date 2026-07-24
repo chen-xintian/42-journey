@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 22:27:35 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/24 22:39:44 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <strings.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <bsd/string.h>
 
 //---------- Prototypes ----------//
 
@@ -29,6 +30,7 @@ static void test_ft_strlcpy(void);
 static void test_ft_strchr(void);
 static void test_ft_strrchr(void);
 static void test_ft_strncmp(void);
+static void test_ft_strnstr(void);
 static void	test_ft_memset(void);
 static void	test_ft_bzero(void);
 static void	test_ft_memcpy(void);
@@ -50,6 +52,7 @@ int	main(void)
 	test_ft_strlen();
 	test_ft_strchr();
 	test_ft_strrchr();
+	test_ft_strnstr();
 	test_ft_strlcpy();
 	test_ft_strlcat();
 	test_ft_strncmp();
@@ -665,6 +668,134 @@ static void	test_ft_strrchr(void)
 	printf("Character     : '%c'\n", test);
 	printf("strrchr       : %p\n", (void *)std);
 	printf("ft_strrchr    : %p\n", (void *)ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+}
+
+// ======================================== //
+//                ft_strnstr                //
+// ======================================== //
+
+static void	test_ft_strnstr(void)
+{
+	const char	*big;
+	const char	*little;
+	const char	*std;
+	const char	*ft;
+
+	printf("========================================\n");
+	printf("               ft_strnstr               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Substring found\n");
+
+	big = "Hello 42 Singapore!";
+	little = "42";
+
+	std = strnstr(big, little, strlen(big));
+	ft = ft_strnstr(big, little, strlen(big));
+
+	printf("Big string    : %s\n", big);
+	printf("Little string : %s\n", little);
+	printf("strnstr       : %s\n", std);
+	printf("ft_strnstr    : %s\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: Substring not found\n");
+
+	little = "Duck";
+
+	std = strnstr(big, little, strlen(big));
+	ft = ft_strnstr(big, little, strlen(big));
+
+	printf("Big string    : %s\n", big);
+	printf("Little string : %s\n", little);
+	printf("strnstr       : %p\n", (void *)std);
+	printf("ft_strnstr    : %p\n", (void *)ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: Search length too small\n");
+
+	little = "Singapore";
+
+	std = strnstr(big, little, 10);
+	ft = ft_strnstr(big, little, 10);
+
+	printf("Big string    : %s\n", big);
+	printf("Little string : %s\n", little);
+	printf("Length        : 10\n");
+	printf("strnstr       : %p\n", (void *)std);
+	printf("ft_strnstr    : %p\n", (void *)ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 4
+	printf("\nTest 4: Empty little string\n");
+
+	little = "";
+
+	std = strnstr(big, little, strlen(big));
+	ft = ft_strnstr(big, little, strlen(big));
+
+	printf("Big string    : %s\n", big);
+	printf("Little string : \"%s\"\n", little);
+	printf("strnstr       : %s\n", std);
+	printf("ft_strnstr    : %s\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 5
+	printf("\nTest 5: Empty big string\n");
+
+	big = "";
+	little = "42";
+
+	std = strnstr(big, little, 10);
+	ft = ft_strnstr(big, little, 10);
+
+	printf("Big string    : \"%s\"\n", big);
+	printf("Little string : %s\n", little);
+	printf("strnstr       : %p\n", (void *)std);
+	printf("ft_strnstr    : %p\n", (void *)ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 6
+	printf("\nTest 6: Both strings empty\n");
+
+	big = "";
+	little = "";
+
+	std = strnstr(big, little, 0);
+	ft = ft_strnstr(big, little, 0);
+
+	printf("Big string    : \"%s\"\n", big);
+	printf("Little string : \"%s\"\n", little);
+	printf("strnstr       : %s\n", std);
+	printf("ft_strnstr    : %s\n", ft);
 
 	if (std == ft)
 		printf("PASS ✅\n");

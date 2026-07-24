@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 15:45:44 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 22:27:32 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/24 22:32:45 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*ft_strrchr(const char *str, int c);
 size_t	ft_strlcpy(char *dest, const char *src, size_t destsize);
 size_t	ft_strlcat(char *dest, const char *src, size_t destsize);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-// char	*ft_strnstr(const char *s1, const char *s2, size_t n);
+char	*ft_strnstr(const char *big, const char *little, size_t len);
 // char	*ft_strdup(const char *s1);
 // char	*ft_substr(char const *s, unsigned int start, size_t len);
 // char	*ft_strjoin(char const *s1, char const *s2);
