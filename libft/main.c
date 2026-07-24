@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 22:39:44 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/24 22:52:51 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	test_ft_isdigit(void);
 static void	test_ft_isalnum(void);
 static void	test_ft_isascii(void);
 static void	test_ft_isprint(void);
+static void test_ft_toupper(void);
+static void test_ft_tolower(void);
 static void	test_ft_strlen(void);
 static void test_ft_strlcpy(void);
 static void test_ft_strchr(void);
@@ -35,10 +37,10 @@ static void	test_ft_memset(void);
 static void	test_ft_bzero(void);
 static void	test_ft_memcpy(void);
 static void	test_ft_memmove(void);
+static void test_ft_memchr(void);
+static void test_ft_memcmp(void);
 static void	test_ft_atoi(void);
 static void test_ft_strlcat(void);
-static void test_ft_toupper(void);
-static void test_ft_tolower(void);
 
 //---------- Main ----------//
 
@@ -49,6 +51,8 @@ int	main(void)
 	test_ft_isalnum();
 	test_ft_isascii();
 	test_ft_isprint();
+	test_ft_toupper();
+	test_ft_tolower();
 	test_ft_strlen();
 	test_ft_strchr();
 	test_ft_strrchr();
@@ -60,8 +64,8 @@ int	main(void)
 	test_ft_bzero();
 	test_ft_memcpy();
 	test_ft_memmove();
-	test_ft_toupper();
-	test_ft_tolower();
+	test_ft_memchr();
+	test_ft_memcmp();
 	test_ft_atoi();
 	return (0);
 }
@@ -458,6 +462,214 @@ static void	test_ft_memset(void)
 		printf("PASS ✅\n");
 	else
 		printf("FAIL ❌\n");
+}
+
+// ======================================== //
+//                ft_memchr                 //
+// ======================================== //
+
+static void	test_ft_memchr(void)
+{
+	const char			*str;
+	const char			*std;
+	const char			*ft;
+	const unsigned char	data[] = {1, 2, 3, 0, 4, 5};
+	const unsigned char	*std_bin;
+	const unsigned char	*ft_bin;
+	size_t				n;
+
+	printf("========================================\n");
+	printf("                ft_memchr               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Character found\n");
+
+	str = "Hello 42!";
+	n = strlen(str);
+
+	std = memchr(str, '4', n);
+	ft = ft_memchr(str, '4', n);
+
+	printf("String       : %s\n", str);
+	printf("Search       : '4'\n");
+	printf("memchr       : %s\n", std);
+	printf("ft_memchr    : %s\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: Character not found\n");
+
+	std = memchr(str, 'X', n);
+	ft = ft_memchr(str, 'X', n);
+
+	printf("String       : %s\n", str);
+	printf("Search       : 'X'\n");
+	printf("memchr       : %p\n", (void *)std);
+	printf("ft_memchr    : %p\n", (void *)ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: Search for null terminator\n");
+
+	std = memchr(str, '\0', strlen(str) + 1);
+	ft = ft_memchr(str, '\0', strlen(str) + 1);
+
+	printf("Search       : '\\0'\n");
+	printf("memchr       : %p\n", (void *)std);
+	printf("ft_memchr    : %p\n", (void *)ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 4
+	printf("\nTest 4: n = 0\n");
+
+	std = memchr(str, 'H', 0);
+	ft = ft_memchr(str, 'H', 0);
+
+	printf("Search       : 'H'\n");
+	printf("memchr       : %p\n", (void *)std);
+	printf("ft_memchr    : %p\n", (void *)ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 5
+	printf("\nTest 5: Binary data\n");
+
+	std_bin = memchr(data, 0, sizeof(data));
+	ft_bin = ft_memchr(data, 0, sizeof(data));
+
+	printf("Search       : byte 0\n");
+	printf("memchr       : %p\n", (void *)std_bin);
+	printf("ft_memchr    : %p\n", (void *)ft_bin);
+
+	if (std_bin == ft_bin)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+}
+
+// ======================================== //
+//                ft_memcmp                 //
+// ======================================== //
+
+static void	test_ft_memcmp(void)
+{
+	const char	*s1;
+	const char	*s2;
+	int			std;
+	int			ft;
+
+	printf("========================================\n");
+	printf("                ft_memcmp              \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Identical strings\n");
+
+	s1 = "Hello 42!";
+	s2 = "Hello 42!";
+
+	std = memcmp(s1, s2, strlen(s1));
+	ft = ft_memcmp(s1, s2, strlen(s1));
+
+	printf("String 1     : %s\n", s1);
+	printf("String 2     : %s\n", s2);
+	printf("memcmp       : %d\n", std);
+	printf("ft_memcmp    : %d\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: Different strings\n");
+
+	s1 = "Hello";
+	s2 = "Hemlo";
+
+	std = memcmp(s1, s2, strlen(s1));
+	ft = ft_memcmp(s1, s2, strlen(s1));
+
+	printf("String 1     : %s\n", s1);
+	printf("String 2     : %s\n", s2);
+	printf("memcmp       : %d\n", std);
+	printf("ft_memcmp    : %d\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: n = 0\n");
+
+	s1 = "Hello";
+	s2 = "World";
+
+	std = memcmp(s1, s2, 0);
+	ft = ft_memcmp(s1, s2, 0);
+
+	printf("memcmp       : %d\n", std);
+	printf("ft_memcmp    : %d\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 4
+	printf("\nTest 4: Compare first 3 bytes only\n");
+
+	s1 = "Hello";
+	s2 = "Helxx";
+
+	std = memcmp(s1, s2, 3);
+	ft = ft_memcmp(s1, s2, 3);
+
+	printf("String 1     : %s\n", s1);
+	printf("String 2     : %s\n", s2);
+	printf("memcmp       : %d\n", std);
+	printf("ft_memcmp    : %d\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 5
+	printf("\nTest 5: Binary data\n");
+
+	{
+		unsigned char	a[] = {1, 2, 3, 4, 5};
+		unsigned char	b[] = {1, 2, 3, 8, 5};
+
+		std = memcmp(a, b, sizeof(a));
+		ft = ft_memcmp(a, b, sizeof(a));
+
+		printf("memcmp       : %d\n", std);
+		printf("ft_memcmp    : %d\n", ft);
+
+		if (std == ft)
+			printf("PASS ✅\n");
+		else
+			printf("FAIL ❌\n");
+	}
 }
 
 // ======================================== //
