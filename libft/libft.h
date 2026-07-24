@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 15:45:44 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 20:15:09 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/24 21:41:27 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_toupper(int c);
-// int		ft_tolower(int c);
+int		ft_tolower(int c);
 
 // --------------------------------STRINGS--------------------------------- //
 size_t	ft_strlen(const char *str);
