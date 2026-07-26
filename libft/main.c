@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 22:52:51 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/26 21:58:01 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -467,7 +467,6 @@ static void	test_ft_memset(void)
 // ======================================== //
 //                ft_memchr                 //
 // ======================================== //
-
 static void	test_ft_memchr(void)
 {
 	const char			*str;
@@ -1313,11 +1312,12 @@ static void	test_ft_strlcat(void)
 	strcpy(ft, "42");
 	src = "Singapore!";
 
-	std_ret = strlcat(std, src, sizeof(std));
-	ft_ret = ft_strlcat(ft, src, sizeof(ft));
+	std_ret = strlcat(std, src, 8);
+	ft_ret = ft_strlcat(ft, src, 8);
 
 	printf("Destination  : 42\n");
 	printf("Source       : %s\n", src);
+	printf("Size         : 8\n");
 	printf("strlcat      : %s\n", std);
 	printf("ft_strlcat   : %s\n", ft);
 	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
@@ -1387,7 +1387,7 @@ static void	test_ft_strlcat(void)
 		printf("FAIL ❌\n");
 
 	// Test 6
-	printf("\nTest 6: Destination already full\n");
+	printf("\nTest 6: Destination size equals current length\n");
 
 	strcpy(std, "Hello");
 	strcpy(ft, "Hello");
@@ -1398,6 +1398,28 @@ static void	test_ft_strlcat(void)
 
 	printf("Destination  : Hello\n");
 	printf("Source       : %s\n", src);
+	printf("strlcat      : %s\n", std);
+	printf("ft_strlcat   : %s\n", ft);
+	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
+
+	if (strcmp(std, ft) == 0 && std_ret == ft_ret)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+// Test 7
+	printf("\nTest 7: Destination size smaller than current destination length\n");
+
+	strcpy(std, "Hello");
+	strcpy(ft, "Hello");
+	src = "42";
+
+	std_ret = strlcat(std, src, 3);
+	ft_ret = ft_strlcat(ft, src, 3);
+
+	printf("Destination  : Hello\n");
+	printf("Source       : %s\n", src);
+	printf("Size         : 3\n");
 	printf("strlcat      : %s\n", std);
 	printf("ft_strlcat   : %s\n", ft);
 	printf("Return       : %zu | %zu\n", std_ret, ft_ret);
