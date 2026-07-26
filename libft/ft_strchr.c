@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 21:47:23 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 22:00:04 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/26 21:18:42 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 char	*ft_strchr(const char *str, int c)
 {
-	while (*str)
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
-		if (*str == (char)c)
-			return ((char *)str);
-		str++;
+		if (str[i] == (char)c)
+			return ((char *)&str[i]);
+		i++;
 	}
-	if (c == '\0')
-		return ((char *)str);
+	if ((char)c == '\0')
+		return ((char *)&str[i]);
 	return (NULL);
 }
