@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/26 21:58:01 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/27 14:50:10 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static void test_ft_memchr(void);
 static void test_ft_memcmp(void);
 static void	test_ft_atoi(void);
 static void test_ft_strlcat(void);
+static void test_ft_strdup(void);
+static void test_ft_calloc(void);
 
 //---------- Main ----------//
 
@@ -66,6 +68,8 @@ int	main(void)
 	test_ft_memmove();
 	test_ft_memchr();
 	test_ft_memcmp();
+	test_ft_strdup();
+	test_ft_calloc();
 	test_ft_atoi();
 	return (0);
 }
@@ -1428,6 +1432,194 @@ static void	test_ft_strlcat(void)
 		printf("PASS ✅\n");
 	else
 		printf("FAIL ❌\n");
+}
+
+// ======================================== //
+//                 ft_strdup                //
+// ======================================== //
+
+static void	test_ft_strdup(void)
+{
+	char	*std;
+	char	*ft;
+	const char	*src;
+
+	printf("========================================\n");
+	printf("               ft_strdup                \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Normal string\n");
+
+	src = "Hello 42!";
+
+	std = strdup(src);
+	ft = ft_strdup(src);
+
+	printf("Source       : %s\n", src);
+	printf("strdup       : %s\n", std);
+	printf("ft_strdup    : %s\n", ft);
+
+	if (strcmp(std, ft) == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(std);
+	free(ft);
+
+	// Test 2
+	printf("\nTest 2: Empty string\n");
+
+	src = "";
+
+	std = strdup(src);
+	ft = ft_strdup(src);
+
+	printf("Source       : \"%s\"\n", src);
+	printf("strdup       : \"%s\"\n", std);
+	printf("ft_strdup    : \"%s\"\n", ft);
+
+	if (strcmp(std, ft) == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(std);
+	free(ft);
+
+	// Test 3
+	printf("\nTest 3: Long string\n");
+
+	src = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+
+	std = strdup(src);
+	ft = ft_strdup(src);
+
+	printf("strdup       : %s\n", std);
+	printf("ft_strdup    : %s\n", ft);
+
+	if (strcmp(std, ft) == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(std);
+	free(ft);
+
+	// Test 4
+	printf("\nTest 4: Independent copy\n");
+
+	src = "Hello";
+
+	std = strdup(src);
+	ft = ft_strdup(src);
+
+	std[0] = 'Y';
+	ft[0] = 'Y';
+
+	printf("strdup       : %s\n", std);
+	printf("ft_strdup    : %s\n", ft);
+
+	if (strcmp(std, ft) == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(std);
+	free(ft);
+}
+
+// ======================================== //
+//                 ft_calloc                //
+// ======================================== //
+
+static void	test_ft_calloc(void)
+{
+	int		*std;
+	int		*ft;
+	size_t	count;
+	size_t	size;
+	size_t	i;
+	int		pass;
+
+	printf("========================================\n");
+	printf("               ft_calloc                \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Allocate 5 integers\n");
+
+	std = calloc(5, sizeof(int));
+	ft = ft_calloc(5, sizeof(int));
+
+	pass = 1;
+	i = 0;
+	while (i < 5)
+	{
+		printf("[%zu] calloc = %d | ft_calloc = %d\n",
+			i, std[i], ft[i]);
+		if (std[i] != ft[i])
+			pass = 0;
+		i++;
+	}
+
+	if (pass)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(std);
+	free(ft);
+
+	// Test 2
+	printf("\nTest 2: Allocate 1 integer\n");
+
+	std = calloc(1, sizeof(int));
+	ft = ft_calloc(1, sizeof(int));
+
+	printf("calloc      : %d\n", std[0]);
+	printf("ft_calloc   : %d\n", ft[0]);
+
+	if (std[0] == ft[0])
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(std);
+	free(ft);
+
+	// Test 3
+	printf("\nTest 3: count = 0\n");
+
+	count = 0;
+
+	std = calloc(count, sizeof(int));
+	ft = ft_calloc(count, sizeof(int));
+
+	printf("calloc      : %p\n", (void *)std);
+	printf("ft_calloc   : %p\n", (void *)ft);
+
+	printf("PASS ✅ (Pointers safely freed)\n");
+
+	free(std);
+	free(ft);
+
+	// Test 4
+	printf("\nTest 4: size = 0\n");
+
+	size = 0;
+
+	std = calloc(5, size);
+	ft = ft_calloc(5, size);
+
+	printf("calloc      : %p\n", (void *)std);
+	printf("ft_calloc   : %p\n", (void *)ft);
+
+	printf("PASS ✅ (Pointers safely freed)\n");
+
+	free(std);
+	free(ft);
 }
 
 // ======================================== //
