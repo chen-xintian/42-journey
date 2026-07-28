@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/27 14:29:31 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/27 14:40:46 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/28 14:32:58 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ char	*ft_strdup(const char *s1)
 	dup = malloc((len + 1) * sizeof(char));
 	if (!dup)
 		return (NULL);
-	ft_strlcpy(dup, s1, len + 1);
+	ft_memcpy(dup, s1, len + 1);
 	return (dup);
 }
