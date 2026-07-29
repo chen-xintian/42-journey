@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/29 17:25:51 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/30 00:37:07 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/30 00:42:06 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,20 @@ static int	ft_numlen(long num)
 	return (len);
 }
 
-static void	ft_fill(char *str, long num, int i)
+static void	ft_fill(char *str, long num, int len)
 {
-	if (num < 0)
+	int	negative;
+
+	negative = (num < 0);
+	if (negative)
 	{
 		str[0] = '-';
 		num = -num;
 	}
-	while (i > (str[0] == '-'))
+	while (len > negative)
 	{
-		i--;
-		str[i] = (num % 10) + '0';
+		len--;
+		str[len] = (num % 10) + '0';
 		num /= 10;
 	}
 }
