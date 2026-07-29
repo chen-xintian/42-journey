@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 15:45:44 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/29 12:23:57 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/29 16:52:05 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_strdup(const char *s1);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
-// char	**ft_split(char const *s, char c);
+char	**ft_split(char const *s, char c);
 // char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 // void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 

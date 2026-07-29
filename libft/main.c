@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/29 12:23:48 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/29 17:19:38 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void test_ft_calloc(void);
 static void test_ft_substr(void);
 static void test_ft_strjoin(void);
 static void test_ft_strtrim(void);
+static void test_ft_split(void);
 
 //---------- Main ----------//
 
@@ -77,6 +78,7 @@ int	main(void)
 	test_ft_substr();
 	test_ft_strjoin();
 	test_ft_strtrim();
+	test_ft_split();
 	return (0);
 }
 
@@ -572,6 +574,7 @@ static void	test_ft_memchr(void)
 		printf("FAIL ❌\n");
 }
 
+
 // ======================================== //
 //                ft_memcmp                 //
 // ======================================== //
@@ -582,9 +585,11 @@ static void	test_ft_memcmp(void)
 	const char	*s2;
 	int			std;
 	int			ft;
+	unsigned char	a[] = {1, 2, 3, 4, 5};
+	unsigned char	b[] = {1, 2, 3, 8, 5};
 
 	printf("========================================\n");
-	printf("                ft_memcmp              \n");
+	printf("                ft_memcmp               \n");
 	printf("========================================\n");
 
 	// Test 1
@@ -601,7 +606,9 @@ static void	test_ft_memcmp(void)
 	printf("memcmp       : %d\n", std);
 	printf("ft_memcmp    : %d\n", ft);
 
-	if (std == ft)
+	if ((std == 0 && ft == 0)
+		|| (std < 0 && ft < 0)
+		|| (std > 0 && ft > 0))
 		printf("PASS ✅\n");
 	else
 		printf("FAIL ❌\n");
@@ -620,7 +627,9 @@ static void	test_ft_memcmp(void)
 	printf("memcmp       : %d\n", std);
 	printf("ft_memcmp    : %d\n", ft);
 
-	if (std == ft)
+	if ((std == 0 && ft == 0)
+		|| (std < 0 && ft < 0)
+		|| (std > 0 && ft > 0))
 		printf("PASS ✅\n");
 	else
 		printf("FAIL ❌\n");
@@ -656,7 +665,9 @@ static void	test_ft_memcmp(void)
 	printf("memcmp       : %d\n", std);
 	printf("ft_memcmp    : %d\n", ft);
 
-	if (std == ft)
+	if ((std == 0 && ft == 0)
+		|| (std < 0 && ft < 0)
+		|| (std > 0 && ft > 0))
 		printf("PASS ✅\n");
 	else
 		printf("FAIL ❌\n");
@@ -664,21 +675,32 @@ static void	test_ft_memcmp(void)
 	// Test 5
 	printf("\nTest 5: Binary data\n");
 
-	{
-		unsigned char	a[] = {1, 2, 3, 4, 5};
-		unsigned char	b[] = {1, 2, 3, 8, 5};
+	std = memcmp(a, b, sizeof(a));
+	ft = ft_memcmp(a, b, sizeof(a));
 
-		std = memcmp(a, b, sizeof(a));
-		ft = ft_memcmp(a, b, sizeof(a));
+	printf("memcmp       : %d\n", std);
+	printf("ft_memcmp    : %d\n", ft);
 
-		printf("memcmp       : %d\n", std);
-		printf("ft_memcmp    : %d\n", ft);
+	if ((std == 0 && ft == 0)
+		|| (std < 0 && ft < 0)
+		|| (std > 0 && ft > 0))
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
 
-		if (std == ft)
-			printf("PASS ✅\n");
-		else
-			printf("FAIL ❌\n");
-	}
+	// Test 6
+	printf("\nTest 6: Compare only first 3 bytes of binary data\n");
+
+	std = memcmp(a, b, 3);
+	ft = ft_memcmp(a, b, 3);
+
+	printf("memcmp       : %d\n", std);
+	printf("ft_memcmp    : %d\n", ft);
+
+	if (std == ft)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
 }
 
 // ======================================== //
@@ -1129,7 +1151,9 @@ static void	test_ft_strncmp(void)
 	printf("strncmp       : %d\n", std);
 	printf("ft_strncmp    : %d\n", ft);
 
-	if (std == ft)
+	if ((std == 0 && ft == 0)
+		|| (std < 0 && ft < 0)
+		|| (std > 0 && ft > 0))
 		printf("PASS ✅\n");
 	else
 		printf("FAIL ❌\n");
@@ -2284,4 +2308,196 @@ static void	test_ft_strtrim(void)
 		printf("FAIL ❌\n");
 
 	free(result);
+}
+
+// ======================================== //
+//                 ft_split                 //
+// ======================================== //
+
+static void	print_split(char **split)
+{
+	size_t	i;
+
+	i = 0;
+	while (split[i])
+	{
+		printf("[%zu] \"%s\"\n", i, split[i]);
+		i++;
+	}
+}
+
+static void	free_split(char **split)
+{
+	size_t	i;
+
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
+
+static void	test_ft_split(void)
+{
+	char	**result;
+
+	printf("========================================\n");
+	printf("                ft_split                \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Normal sentence\n");
+
+	result = ft_split("Hello 42 Singapore", ' ');
+
+	print_split(result);
+
+	if (strcmp(result[0], "Hello") == 0
+		&& strcmp(result[1], "42") == 0
+		&& strcmp(result[2], "Singapore") == 0
+		&& result[3] == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free_split(result);
+
+	// Test 2
+	printf("\nTest 2: Consecutive delimiters\n");
+
+	result = ft_split("Hello,,,42,,,Singapore", ',');
+
+	print_split(result);
+
+	if (strcmp(result[0], "Hello") == 0
+		&& strcmp(result[1], "42") == 0
+		&& strcmp(result[2], "Singapore") == 0
+		&& result[3] == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free_split(result);
+
+	// Test 3
+	printf("\nTest 3: Leading delimiters\n");
+
+	result = ft_split("   Hello 42", ' ');
+
+	print_split(result);
+
+	if (strcmp(result[0], "Hello") == 0
+		&& strcmp(result[1], "42") == 0
+		&& result[2] == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free_split(result);
+
+	// Test 4
+	printf("\nTest 4: Trailing delimiters\n");
+
+	result = ft_split("Hello 42   ", ' ');
+
+	print_split(result);
+
+	if (strcmp(result[0], "Hello") == 0
+		&& strcmp(result[1], "42") == 0
+		&& result[2] == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free_split(result);
+
+	// Test 5
+	printf("\nTest 5: Only delimiters\n");
+
+	result = ft_split(",,,,,,", ',');
+
+	if (result[0] == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free_split(result);
+
+	// Test 6
+	printf("\nTest 6: Empty string\n");
+
+	result = ft_split("", ' ');
+
+	if (result[0] == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free_split(result);
+
+	// Test 7
+	printf("\nTest 7: No delimiter found\n");
+
+	result = ft_split("Singapore", ',');
+
+	print_split(result);
+
+	if (strcmp(result[0], "Singapore") == 0
+		&& result[1] == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free_split(result);
+
+	// Test 8
+	printf("\nTest 8: Single-character words\n");
+
+	result = ft_split("a,b,c,d,e", ',');
+
+	print_split(result);
+
+	if (strcmp(result[0], "a") == 0
+		&& strcmp(result[1], "b") == 0
+		&& strcmp(result[2], "c") == 0
+		&& strcmp(result[3], "d") == 0
+		&& strcmp(result[4], "e") == 0
+		&& result[5] == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free_split(result);
+
+	// Test 9
+	printf("\nTest 9: Delimiter is '\\0'\n");
+
+	result = ft_split("Hello", '\0');
+
+	print_split(result);
+
+	if (strcmp(result[0], "Hello") == 0
+		&& result[1] == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free_split(result);
+
+	// Test 10
+	printf("\nTest 10: One word surrounded by delimiters\n");
+
+	result = ft_split("*****42*****", '*');
+
+	print_split(result);
+
+	if (strcmp(result[0], "42") == 0
+		&& result[1] == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free_split(result);
 }
