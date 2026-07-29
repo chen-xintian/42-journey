@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/27 14:50:10 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/28 15:01:56 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	test_ft_atoi(void);
 static void test_ft_strlcat(void);
 static void test_ft_strdup(void);
 static void test_ft_calloc(void);
+static void test_ft_substr(void);
 
 //---------- Main ----------//
 
@@ -71,6 +72,7 @@ int	main(void)
 	test_ft_strdup();
 	test_ft_calloc();
 	test_ft_atoi();
+	test_ft_substr();
 	return (0);
 }
 
@@ -1945,4 +1947,119 @@ static void	test_ft_atoi(void)
 		printf("PASS ✅\n");
 	else
 		printf("FAIL ❌\n");
+}
+
+// ======================================== //
+//                ft_substr                 //
+// ======================================== //
+
+static void	test_ft_substr(void)
+{
+	char	*result;
+
+	printf("========================================\n");
+	printf("               ft_substr                \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Normal substring\n");
+
+	result = ft_substr("Hello 42!", 6, 2);
+
+	printf("Input        : \"Hello 42!\"\n");
+	printf("Start        : 6\n");
+	printf("Length       : 2\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "42") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 2
+	printf("\nTest 2: Length longer than remaining string\n");
+
+	result = ft_substr("Hello", 3, 10);
+
+	printf("Input        : \"Hello\"\n");
+	printf("Start        : 3\n");
+	printf("Length       : 10\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "lo") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 3
+	printf("\nTest 3: Start beyond end of string\n");
+
+	result = ft_substr("Hello", 20, 5);
+
+	printf("Input        : \"Hello\"\n");
+	printf("Start        : 20\n");
+	printf("Length       : 5\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 4
+	printf("\nTest 4: Length = 0\n");
+
+	result = ft_substr("Hello", 2, 0);
+
+	printf("Input        : \"Hello\"\n");
+	printf("Start        : 2\n");
+	printf("Length       : 0\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 5
+	printf("\nTest 5: Empty string\n");
+
+	result = ft_substr("", 0, 5);
+
+	printf("Input        : \"\"\n");
+	printf("Start        : 0\n");
+	printf("Length       : 5\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 6
+	printf("\nTest 6: Copy entire string\n");
+
+	result = ft_substr("42 Singapore", 0, 50);
+
+	printf("Input        : \"42 Singapore\"\n");
+	printf("Start        : 0\n");
+	printf("Length       : 50\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "42 Singapore") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
 }
