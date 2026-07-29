@@ -6,40 +6,50 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/29 17:25:51 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/30 00:03:57 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/30 00:37:07 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h" 
+#include "libft.h"
 
-char	*ft_itoa(int n)
+static int	ft_numlen(long num)
 {
-	char	*str;
-	long	num;
-	int		len;
+	int	len;
 
-	num = n;
 	len = (num <= 0);
 	while (num != 0)
 	{
 		num /= 10;
 		len++;
 	}
-	str = malloc((len + 1) * sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	str[len] = '\0';
-	num = n;
+	return (len);
+}
+
+static void	ft_fill(char *str, long num, int i)
+{
 	if (num < 0)
 	{
 		str[0] = '-';
 		num = -num;
 	}
-	while (len > (n < 0))
+	while (i > (str[0] == '-'))
 	{
-		len--;
-		str[len] = (num % 10) + '0';
+		i--;
+		str[i] = (num % 10) + '0';
 		num /= 10;
 	}
+}
+
+char	*ft_itoa(int n)
+{
+	char	*str;
+	int		len;
+
+	len = ft_numlen((long)n);
+	str = malloc((len + 1) * sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	str[len] = '\0';
+	ft_fill(str, (long)n, len);
 	return (str);
 }
