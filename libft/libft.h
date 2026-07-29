@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 15:45:44 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/29 16:52:05 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/29 23:54:34 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ void	*ft_calloc(size_t count, size_t size);
 
 // --------------------------------NUMBERS--------------------------------- //
 int		ft_atoi(const char *str);
-// char	*ft_itoa(int n);
+char	*ft_itoa(int n);
 
 #endif

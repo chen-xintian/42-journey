@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/29 17:19:38 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/29 23:57:27 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void test_ft_substr(void);
 static void test_ft_strjoin(void);
 static void test_ft_strtrim(void);
 static void test_ft_split(void);
+static void test_ft_itoa(void);
 
 //---------- Main ----------//
 
@@ -79,6 +80,7 @@ int	main(void)
 	test_ft_strjoin();
 	test_ft_strtrim();
 	test_ft_split();
+	test_ft_itoa();
 	return (0);
 }
 
@@ -2500,4 +2502,122 @@ static void	test_ft_split(void)
 		printf("FAIL ❌\n");
 
 	free_split(result);
+}
+
+// ======================================== //
+//                 ft_itoa                  //
+// ======================================== //
+
+static void	test_ft_itoa(void)
+{
+	char	*result;
+
+	printf("========================================\n");
+	printf("                 ft_itoa                \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Positive number\n");
+
+	result = ft_itoa(42);
+
+	printf("Input        : 42\n");
+	printf("Result       : %s\n", result);
+
+	if (strcmp(result, "42") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 2
+	printf("\nTest 2: Negative number\n");
+
+	result = ft_itoa(-42);
+
+	printf("Input        : -42\n");
+	printf("Result       : %s\n", result);
+
+	if (strcmp(result, "-42") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 3
+	printf("\nTest 3: Zero\n");
+
+	result = ft_itoa(0);
+
+	printf("Input        : 0\n");
+	printf("Result       : %s\n", result);
+
+	if (strcmp(result, "0") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 4
+	printf("\nTest 4: INT_MAX\n");
+
+	result = ft_itoa(INT_MAX);
+
+	printf("Input        : %d\n", INT_MAX);
+	printf("Result       : %s\n", result);
+
+	if (strcmp(result, "2147483647") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 5
+	printf("\nTest 5: INT_MIN\n");
+
+	result = ft_itoa(INT_MIN);
+
+	printf("Input        : %d\n", INT_MIN);
+	printf("Result       : %s\n", result);
+
+	if (strcmp(result, "-2147483648") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 6
+	printf("\nTest 6: Large positive number\n");
+
+	result = ft_itoa(123456789);
+
+	printf("Input        : 123456789\n");
+	printf("Result       : %s\n", result);
+
+	if (strcmp(result, "123456789") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 7
+	printf("\nTest 7: Large negative number\n");
+
+	result = ft_itoa(-987654321);
+
+	printf("Input        : -987654321\n");
+	printf("Result       : %s\n", result);
+
+	if (strcmp(result, "-987654321") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
 }
