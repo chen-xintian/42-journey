@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/28 15:01:56 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/29 12:23:48 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static void test_ft_strlcat(void);
 static void test_ft_strdup(void);
 static void test_ft_calloc(void);
 static void test_ft_substr(void);
+static void test_ft_strjoin(void);
+static void test_ft_strtrim(void);
 
 //---------- Main ----------//
 
@@ -73,6 +75,8 @@ int	main(void)
 	test_ft_calloc();
 	test_ft_atoi();
 	test_ft_substr();
+	test_ft_strjoin();
+	test_ft_strtrim();
 	return (0);
 }
 
@@ -2057,6 +2061,224 @@ static void	test_ft_substr(void)
 	printf("Result       : \"%s\"\n", result);
 
 	if (strcmp(result, "42 Singapore") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+}
+
+// ======================================== //
+//                ft_strjoin                //
+// ======================================== //
+
+static void	test_ft_strjoin(void)
+{
+	char	*result;
+
+	printf("========================================\n");
+	printf("               ft_strjoin               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Normal strings\n");
+
+	result = ft_strjoin("Hello ", "42!");
+
+	printf("String 1     : \"Hello \"\n");
+	printf("String 2     : \"42!\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "Hello 42!") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 2
+	printf("\nTest 2: First string empty\n");
+
+	result = ft_strjoin("", "Singapore");
+
+	printf("String 1     : \"\"\n");
+	printf("String 2     : \"Singapore\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "Singapore") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 3
+	printf("\nTest 3: Second string empty\n");
+
+	result = ft_strjoin("Hello", "");
+
+	printf("String 1     : \"Hello\"\n");
+	printf("String 2     : \"\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "Hello") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 4
+	printf("\nTest 4: Both strings empty\n");
+
+	result = ft_strjoin("", "");
+
+	printf("String 1     : \"\"\n");
+	printf("String 2     : \"\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 5
+	printf("\nTest 5: Long strings\n");
+
+	result = ft_strjoin("42 ", "Common Core");
+
+	printf("String 1     : \"42 \"\n");
+	printf("String 2     : \"Common Core\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "42 Common Core") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 6
+	printf("\nTest 6: Spaces preserved\n");
+
+	result = ft_strjoin("Hello", " World");
+
+	printf("String 1     : \"Hello\"\n");
+	printf("String 2     : \" World\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "Hello World") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+}
+
+// ======================================== //
+//                ft_strtrim                //
+// ======================================== //
+
+static void	test_ft_strtrim(void)
+{
+	char	*result;
+
+	printf("========================================\n");
+	printf("               ft_strtrim               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Trim spaces\n");
+
+	result = ft_strtrim("   Hello 42!   ", " ");
+
+	printf("Input        : \"   Hello 42!   \"\n");
+	printf("Set          : \" \"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "Hello 42!") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 2
+	printf("\nTest 2: Trim multiple characters\n");
+
+	result = ft_strtrim("***Hello***", "*");
+
+	printf("Input        : \"***Hello***\"\n");
+	printf("Set          : \"*\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "Hello") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 3
+	printf("\nTest 3: Nothing to trim\n");
+
+	result = ft_strtrim("Hello", "*");
+
+	printf("Input        : \"Hello\"\n");
+	printf("Set          : \"*\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "Hello") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 4
+	printf("\nTest 4: Entire string trimmed\n");
+
+	result = ft_strtrim("*****", "*");
+
+	printf("Input        : \"*****\"\n");
+	printf("Set          : \"*\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 5
+	printf("\nTest 5: Empty string\n");
+
+	result = ft_strtrim("", "*");
+
+	printf("Input        : \"\"\n");
+	printf("Set          : \"*\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 6
+	printf("\nTest 6: Characters only trimmed at ends\n");
+
+	result = ft_strtrim("**He*llo**", "*");
+
+	printf("Input        : \"**He*llo**\"\n");
+	printf("Set          : \"*\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "He*llo") == 0)
 		printf("PASS ✅\n");
 	else
 		printf("FAIL ❌\n");
