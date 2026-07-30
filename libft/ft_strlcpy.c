@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/24 17:57:21 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 18:12:04 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/31 01:16:57 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t destsize)
 	src_len = 0;
 	while (src[src_len])
 		src_len++;
-
 	if (destsize == 0)
 		return (src_len);
-
 	i = 0;
 	while (i < destsize - 1 && src[i])
 	{
