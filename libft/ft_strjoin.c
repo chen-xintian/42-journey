@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/29 11:54:52 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/29 12:05:41 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/31 01:16:07 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	result[len1 + len2] = '\0';
 	return (result);
 }
-
