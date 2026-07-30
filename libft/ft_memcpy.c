@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 11:28:24 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/24 13:35:22 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/31 01:15:21 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	size_t	i;
+	size_t			i;
 	unsigned char	*dest_ptr;
 	unsigned char	*src_ptr;
 
