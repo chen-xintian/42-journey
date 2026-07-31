@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/31 17:55:12 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/31 17:58:35 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void test_ft_lstlast(void);
 static void test_ft_lstadd_back(void);
 static void test_ft_lstdelone(void);
 static void test_ft_lstclear(void);
+static void test_ft_lstiter(void);
 //---------- Main ----------//
 
 int	main(void)
@@ -107,6 +108,7 @@ int	main(void)
 	test_ft_lstadd_back();
 	test_ft_lstdelone();
 	test_ft_lstclear();
+	test_ft_lstiter();
 	return (0);
 }
 
@@ -3786,4 +3788,114 @@ static void	test_ft_lstclear(void)
 	/* Manual cleanup */
 	free(head->content);
 	free(head);
+}
+
+// ======================================== //
+//                ft_lstiter                //
+// ======================================== //
+
+static void	iter_uppercase(void *content)
+{
+	char	*str;
+	size_t	i;
+
+	str = (char *)content;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] >= 'a' && str[i] <= 'z')
+			str[i] -= 32;
+		i++;
+	}
+}
+
+static void	test_ft_lstiter(void)
+{
+	t_list	*head;
+
+	printf("========================================\n");
+	printf("               ft_lstiter               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Empty list\n");
+
+	head = NULL;
+	ft_lstiter(head, iter_uppercase);
+
+	printf("Expected     : No crash\n");
+	printf("PASS ✅\n");
+
+	// Test 2
+	printf("\nTest 2: One node\n");
+
+	head = ft_lstnew(ft_strdup("hello"));
+
+	ft_lstiter(head, iter_uppercase);
+
+	printf("Expected     : HELLO\n");
+	printf("Result       : %s\n", (char *)head->content);
+
+	if (strcmp(head->content, "HELLO") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head->content);
+	free(head);
+
+	// Test 3
+	printf("\nTest 3: Three nodes\n");
+
+	head = ft_lstnew(ft_strdup("one"));
+	head->next = ft_lstnew(ft_strdup("two"));
+	head->next->next = ft_lstnew(ft_strdup("three"));
+
+	ft_lstiter(head, iter_uppercase);
+
+	printf("Expected     : ONE TWO THREE\n");
+	printf("Result       : %s %s %s\n",
+		(char *)head->content,
+		(char *)head->next->content,
+		(char *)head->next->next->content);
+
+	if (strcmp(head->content, "ONE") == 0
+		&& strcmp(head->next->content, "TWO") == 0
+		&& strcmp(head->next->next->content, "THREE") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head->next->next->content);
+	free(head->next->next);
+	free(head->next->content);
+	free(head->next);
+	free(head->content);
+	free(head);
+
+	// Test 4
+	printf("\nTest 4: NULL function\n");
+
+	head = ft_lstnew(ft_strdup("hello"));
+
+	ft_lstiter(head, NULL);
+
+	printf("Expected     : hello\n");
+	printf("Result       : %s\n", (char *)head->content);
+
+	if (strcmp(head->content, "hello") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head->content);
+	free(head);
+
+	// Test 5
+	printf("\nTest 5: NULL list\n");
+
+	ft_lstiter(NULL, iter_uppercase);
+
+	printf("Expected     : No crash\n");
+	printf("PASS ✅\n");
 }
