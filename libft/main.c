@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/31 14:53:11 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/31 17:38:05 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ static void test_ft_putstr_fd(void);
 static void test_ft_putendl_fd(void);
 static void test_ft_putnbr_fd(void);
 static void test_ft_lstnew(void);
-
+static void test_ft_lstadd_front(void);
+static void test_ft_lstsize(void);
+static void test_ft_lstlast(void);
 //---------- Main ----------//
 
 int	main(void)
@@ -96,6 +98,9 @@ int	main(void)
 	test_ft_putendl_fd();
 	test_ft_putnbr_fd();
 	test_ft_lstnew();
+	test_ft_lstadd_front();
+	test_ft_lstsize();
+	test_ft_lstlast();
 	return (0);
 }
 
@@ -3240,4 +3245,292 @@ static void	test_ft_lstnew(void)
 		printf("FAIL ❌\n");
 
 	free(node);
+}
+
+// ======================================== //
+//              ft_lstadd_front             //
+// ======================================== //
+
+static void	test_ft_lstadd_front(void)
+{
+	t_list	*head;
+	t_list	*new;
+	t_list	*node2;
+
+	printf("========================================\n");
+	printf("            ft_lstadd_front             \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Add to empty list\n");
+
+	head = NULL;
+	new = ft_lstnew("First");
+
+	ft_lstadd_front(&head, new);
+
+	printf("Expected     : First\n");
+	printf("Result       : %s\n", (char *)head->content);
+
+	if (head == new && strcmp(head->content, "First") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head);
+
+	// Test 2
+	printf("\nTest 2: Add to front of existing list\n");
+
+	head = ft_lstnew("Second");
+	new = ft_lstnew("First");
+
+	ft_lstadd_front(&head, new);
+
+	printf("Expected     : First -> Second\n");
+	printf("Result       : %s -> %s\n",
+		(char *)head->content,
+		(char *)head->next->content);
+
+	if (strcmp(head->content, "First") == 0
+		&& strcmp(head->next->content, "Second") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head->next);
+	free(head);
+
+	// Test 3
+	printf("\nTest 3: Add multiple nodes to front\n");
+
+	head = ft_lstnew("Three");
+
+	node2 = ft_lstnew("Two");
+	ft_lstadd_front(&head, node2);
+
+	new = ft_lstnew("One");
+	ft_lstadd_front(&head, new);
+
+	printf("Expected     : One -> Two -> Three\n");
+	printf("Result       : %s -> %s -> %s\n",
+		(char *)head->content,
+		(char *)head->next->content,
+		(char *)head->next->next->content);
+
+	if (strcmp(head->content, "One") == 0
+		&& strcmp(head->next->content, "Two") == 0
+		&& strcmp(head->next->next->content, "Three") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head->next->next);
+	free(head->next);
+	free(head);
+
+	// Test 4
+	printf("\nTest 4: NULL new node\n");
+
+	head = ft_lstnew("Hello");
+
+	ft_lstadd_front(&head, NULL);
+
+	printf("Expected     : Hello\n");
+	printf("Result       : %s\n", (char *)head->content);
+
+	if (strcmp(head->content, "Hello") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head);
+
+	// Test 5
+	printf("\nTest 5: NULL list pointer\n");
+
+	new = ft_lstnew("Hello");
+
+	ft_lstadd_front(NULL, new);
+
+	printf("Expected     : No crash\n");
+	printf("Result       : Function returned safely\n");
+	printf("PASS ✅\n");
+
+	free(new);
+}
+
+// ======================================== //
+//               ft_lstsize                 //
+// ======================================== //
+
+static void	test_ft_lstsize(void)
+{
+	t_list	*head;
+	t_list	*node;
+
+	printf("========================================\n");
+	printf("               ft_lstsize               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Empty list\n");
+
+	head = NULL;
+
+	printf("Expected     : 0\n");
+	printf("Result       : %d\n", ft_lstsize(head));
+
+	if (ft_lstsize(head) == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: One node\n");
+
+	head = ft_lstnew("42");
+
+	printf("Expected     : 1\n");
+	printf("Result       : %d\n", ft_lstsize(head));
+
+	if (ft_lstsize(head) == 1)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head);
+
+	// Test 3
+	printf("\nTest 3: Three nodes\n");
+
+	head = ft_lstnew("One");
+	node = ft_lstnew("Two");
+	head->next = node;
+	node->next = ft_lstnew("Three");
+
+	printf("Expected     : 3\n");
+	printf("Result       : %d\n", ft_lstsize(head));
+
+	if (ft_lstsize(head) == 3)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head->next->next);
+	free(head->next);
+	free(head);
+
+	// Test 4
+	printf("\nTest 4: Five nodes\n");
+
+	head = ft_lstnew("1");
+	head->next = ft_lstnew("2");
+	head->next->next = ft_lstnew("3");
+	head->next->next->next = ft_lstnew("4");
+	head->next->next->next->next = ft_lstnew("5");
+
+	printf("Expected     : 5\n");
+	printf("Result       : %d\n", ft_lstsize(head));
+
+	if (ft_lstsize(head) == 5)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head->next->next->next->next);
+	free(head->next->next->next);
+	free(head->next->next);
+	free(head->next);
+	free(head);
+}
+
+// ======================================== //
+//               ft_lstlast                 //
+// ======================================== //
+
+static void	test_ft_lstlast(void)
+{
+	t_list	*head;
+	t_list	*last;
+
+	printf("========================================\n");
+	printf("               ft_lstlast               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Empty list\n");
+
+	head = NULL;
+	last = ft_lstlast(head);
+
+	printf("Expected     : NULL\n");
+	printf("Result       : %p\n", (void *)last);
+
+	if (last == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: One node\n");
+
+	head = ft_lstnew("42");
+	last = ft_lstlast(head);
+
+	printf("Expected     : 42\n");
+	printf("Result       : %s\n", (char *)last->content);
+
+	if (strcmp(last->content, "42") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head);
+
+	// Test 3
+	printf("\nTest 3: Three nodes\n");
+
+	head = ft_lstnew("One");
+	head->next = ft_lstnew("Two");
+	head->next->next = ft_lstnew("Three");
+
+	last = ft_lstlast(head);
+
+	printf("Expected     : Three\n");
+	printf("Result       : %s\n", (char *)last->content);
+
+	if (strcmp(last->content, "Three") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head->next->next);
+	free(head->next);
+	free(head);
+
+	// Test 4
+	printf("\nTest 4: Five nodes\n");
+
+	head = ft_lstnew("1");
+	head->next = ft_lstnew("2");
+	head->next->next = ft_lstnew("3");
+	head->next->next->next = ft_lstnew("4");
+	head->next->next->next->next = ft_lstnew("5");
+
+	last = ft_lstlast(head);
+
+	printf("Expected     : 5\n");
+	printf("Result       : %s\n", (char *)last->content);
+
+	if (strcmp(last->content, "5") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(head->next->next->next->next);
+	free(head->next->next->next);
+	free(head->next->next);
+	free(head->next);
+	free(head);
 }
