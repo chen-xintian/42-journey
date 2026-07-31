@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/31 17:43:09 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/31 17:48:45 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static void test_ft_lstadd_front(void);
 static void test_ft_lstsize(void);
 static void test_ft_lstlast(void);
 static void test_ft_lstadd_back(void);
+static void test_ft_lstdelone(void);
 //---------- Main ----------//
 
 int	main(void)
@@ -103,6 +104,7 @@ int	main(void)
 	test_ft_lstsize();
 	test_ft_lstlast();
 	test_ft_lstadd_back();
+	test_ft_lstdelone();
 	return (0);
 }
 
@@ -3644,4 +3646,56 @@ static void	test_ft_lstadd_back(void)
 	printf("PASS ✅\n");
 
 	free(new);
+}
+
+// ======================================== //
+//              ft_lstdelone                //
+// ======================================== //
+
+static void	del_content(void *content)
+{
+	free(content);
+}
+
+static void	test_ft_lstdelone(void)
+{
+	t_list	*node;
+	char	*str;
+
+	printf("========================================\n");
+	printf("             ft_lstdelone               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Delete one node\n");
+
+	str = ft_strdup("Hello");
+	node = ft_lstnew(str);
+
+	printf("Content before: %s\n", (char *)node->content);
+
+	ft_lstdelone(node, del_content);
+
+	printf("PASS ✅ (No crash)\n");
+
+	// Test 2
+	printf("\nTest 2: NULL node\n");
+
+	ft_lstdelone(NULL, del_content);
+
+	printf("PASS ✅ (No crash)\n");
+
+	// Test 3
+	printf("\nTest 3: NULL del function\n");
+
+	str = ft_strdup("42");
+	node = ft_lstnew(str);
+
+	ft_lstdelone(node, NULL);
+
+	printf("PASS ✅ (Node intentionally not deleted)\n");
+
+	/* Clean up manually */
+	free(str);
+	free(node);
 }
