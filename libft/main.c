@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/29 23:57:27 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/31 14:53:11 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <bsd/string.h>
+#include <fcntl.h>
 
 //---------- Prototypes ----------//
 
@@ -48,6 +49,13 @@ static void test_ft_strjoin(void);
 static void test_ft_strtrim(void);
 static void test_ft_split(void);
 static void test_ft_itoa(void);
+static void test_ft_strmapi(void);
+static void test_ft_striteri(void);
+static void test_ft_putchar_fd(void);
+static void test_ft_putstr_fd(void);
+static void test_ft_putendl_fd(void);
+static void test_ft_putnbr_fd(void);
+static void test_ft_lstnew(void);
 
 //---------- Main ----------//
 
@@ -81,6 +89,13 @@ int	main(void)
 	test_ft_strtrim();
 	test_ft_split();
 	test_ft_itoa();
+	test_ft_strmapi();
+	test_ft_striteri();
+	test_ft_putchar_fd();
+	test_ft_putstr_fd();
+	test_ft_putendl_fd();
+	test_ft_putnbr_fd();
+	test_ft_lstnew();
 	return (0);
 }
 
@@ -2620,4 +2635,609 @@ static void	test_ft_itoa(void)
 		printf("FAIL ❌\n");
 
 	free(result);
+}
+
+// ======================================== //
+//                ft_strmapi                //
+// ======================================== //
+
+static char	to_upper_even(unsigned int i, char c)
+{
+	if (i % 2 == 0 && c >= 'a' && c <= 'z')
+		return (c - 32);
+	return (c);
+}
+
+static char	add_index(unsigned int i, char c)
+{
+	return (c + i);
+}
+
+static void	test_ft_strmapi(void)
+{
+	char	*result;
+
+	printf("========================================\n");
+	printf("               ft_strmapi              \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Uppercase even indices\n");
+
+	result = ft_strmapi("hello world", to_upper_even);
+
+	printf("Input        : \"hello world\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "HeLlO WoRlD") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 2
+	printf("\nTest 2: Empty string\n");
+
+	result = ft_strmapi("", to_upper_even);
+
+	printf("Input        : \"\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 3
+	printf("\nTest 3: Identity function\n");
+
+	result = ft_strmapi("42 Singapore!", add_index);
+
+	printf("Input        : \"42 Singapore!\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (result != NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 4
+	printf("\nTest 4: Single character\n");
+
+	result = ft_strmapi("a", to_upper_even);
+
+	printf("Input        : \"a\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "A") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 5
+	printf("\nTest 5: Numbers unchanged\n");
+
+	result = ft_strmapi("123456", to_upper_even);
+
+	printf("Input        : \"123456\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "123456") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+
+	// Test 6
+	printf("\nTest 6: Mixed characters\n");
+
+	result = ft_strmapi("abc123xyz", to_upper_even);
+
+	printf("Input        : \"abc123xyz\"\n");
+	printf("Result       : \"%s\"\n", result);
+
+	if (strcmp(result, "AbC123XyZ") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(result);
+}
+
+// ======================================== //
+//               ft_striteri                //
+// ======================================== //
+
+static void	iter_upper_even(unsigned int i, char *c)
+{
+	if (i % 2 == 0 && *c >= 'a' && *c <= 'z')
+		*c -= 32;
+}
+
+static void	iter_add_index(unsigned int i, char *c)
+{
+	*c += i;
+}
+
+static void	test_ft_striteri(void)
+{
+	char	str1[20];
+	char	str2[20];
+	char	str3[20];
+	char	str4[20];
+	char	str5[20];
+	char	str6[20];
+
+	printf("========================================\n");
+	printf("              ft_striteri               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Uppercase even indices\n");
+
+	strcpy(str1, "hello world");
+	ft_striteri(str1, iter_upper_even);
+
+	printf("Input        : \"hello world\"\n");
+	printf("Result       : \"%s\"\n", str1);
+
+	if (strcmp(str1, "HeLlO WoRlD") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: Empty string\n");
+
+	strcpy(str2, "");
+	ft_striteri(str2, iter_upper_even);
+
+	printf("Input        : \"\"\n");
+	printf("Result       : \"%s\"\n", str2);
+
+	if (strcmp(str2, "") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: Single character\n");
+
+	strcpy(str3, "a");
+	ft_striteri(str3, iter_upper_even);
+
+	printf("Input        : \"a\"\n");
+	printf("Result       : \"%s\"\n", str3);
+
+	if (strcmp(str3, "A") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 4
+	printf("\nTest 4: Numbers unchanged\n");
+
+	strcpy(str4, "123456");
+	ft_striteri(str4, iter_upper_even);
+
+	printf("Input        : \"123456\"\n");
+	printf("Result       : \"%s\"\n", str4);
+
+	if (strcmp(str4, "123456") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 5
+	printf("\nTest 5: Mixed characters\n");
+
+	strcpy(str5, "abc123xyz");
+	ft_striteri(str5, iter_upper_even);
+
+	printf("Input        : \"abc123xyz\"\n");
+	printf("Result       : \"%s\"\n", str5);
+
+	if (strcmp(str5, "AbC123XyZ") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 6
+	printf("\nTest 6: Function uses index\n");
+
+	strcpy(str6, "ABCDE");
+	ft_striteri(str6, iter_add_index);
+
+	printf("Input        : \"ABCDE\"\n");
+	printf("Result       : \"%s\"\n", str6);
+
+	if (strcmp(str6, "ACEGI") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+}
+
+// ======================================== //
+//              ft_putchar_fd               //
+// ======================================== //
+
+static void	test_ft_putchar_fd(void)
+{
+	int		fd;
+	char	buffer[2];
+
+	printf("========================================\n");
+	printf("             ft_putchar_fd              \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Print to stdout\n");
+
+	printf("Expected     : A\n");
+	printf("Result       : ");
+	ft_putchar_fd('A', 1);
+	printf("\nPASS ✅ (visual check)\n");
+
+	// Test 2
+	printf("\nTest 2: Print digit\n");
+
+	printf("Expected     : 4\n");
+	printf("Result       : ");
+	ft_putchar_fd('4', 1);
+	printf("\nPASS ✅ (visual check)\n");
+
+	// Test 3
+	printf("\nTest 3: Print newline\n");
+
+	printf("Expected     : New line below\n");
+	ft_putchar_fd('\n', 1);
+	printf("PASS ✅ (visual check)\n");
+
+	// Test 4
+	printf("\nTest 4: Write to file\n");
+
+	fd = open("putchar_test.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		printf("FAIL ❌ (cannot open file)\n");
+		return ;
+	}
+
+	ft_putchar_fd('Z', fd);
+	close(fd);
+
+	fd = open("putchar_test.txt", O_RDONLY);
+	read(fd, buffer, 1);
+	buffer[1] = '\0';
+	close(fd);
+
+	printf("Expected     : Z\n");
+	printf("Result       : %s\n", buffer);
+
+	if (strcmp(buffer, "Z") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	remove("putchar_test.txt");
+}
+
+// ======================================== //
+//               ft_putstr_fd               //
+// ======================================== //
+
+static void	test_ft_putstr_fd(void)
+{
+	int		fd;
+	char	buffer[50];
+
+	printf("========================================\n");
+	printf("              ft_putstr_fd              \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Print to stdout\n");
+
+	printf("Expected     : Hello 42!\n");
+	printf("Result       : ");
+	ft_putstr_fd("Hello 42!", 1);
+	printf("\nPASS ✅ (visual check)\n");
+
+	// Test 2
+	printf("\nTest 2: Empty string\n");
+
+	printf("Expected     : (nothing)\n");
+	printf("Result       : ");
+	ft_putstr_fd("", 1);
+	printf("\nPASS ✅ (visual check)\n");
+
+	// Test 3
+	printf("\nTest 3: NULL string\n");
+
+	printf("Expected     : No output\n");
+	printf("Result       : ");
+	ft_putstr_fd(NULL, 1);
+	printf("\nPASS ✅ (should not crash)\n");
+
+	// Test 4
+	printf("\nTest 4: Write to file\n");
+
+	fd = open("putstr_test.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		printf("FAIL ❌ (cannot open file)\n");
+		return ;
+	}
+
+	ft_putstr_fd("42 Singapore", fd);
+	close(fd);
+
+	fd = open("putstr_test.txt", O_RDONLY);
+	read(fd, buffer, sizeof(buffer) - 1);
+	buffer[12] = '\0';
+	close(fd);
+
+	printf("Expected     : 42 Singapore\n");
+	printf("Result       : %s\n", buffer);
+
+	if (strcmp(buffer, "42 Singapore") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	remove("putstr_test.txt");
+
+	// Test 5
+	printf("\nTest 5: Special characters\n");
+
+	printf("Expected     : Hello\t42!\n");
+	printf("Result       : ");
+	ft_putstr_fd("Hello\t42!", 1);
+	printf("\nPASS ✅ (visual check)\n");
+}
+
+// ======================================== //
+//              ft_putendl_fd               //
+// ======================================== //
+
+static void	test_ft_putendl_fd(void)
+{
+	int		fd;
+	char	buffer[50];
+	int		bytes;
+
+	printf("========================================\n");
+	printf("             ft_putendl_fd              \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Print to stdout\n");
+
+	printf("Expected     : Hello 42!\\n\n");
+	printf("Result       :\n");
+	ft_putendl_fd("Hello 42!", 1);
+	printf("PASS ✅ (visual check)\n");
+
+	// Test 2
+	printf("\nTest 2: Empty string\n");
+
+	printf("Expected     : Blank line\n");
+	printf("Result       :\n");
+	ft_putendl_fd("", 1);
+	printf("PASS ✅ (visual check)\n");
+
+	// Test 3
+	printf("\nTest 3: NULL string\n");
+
+	printf("Expected     : No output\n");
+	printf("Result       : ");
+	ft_putendl_fd(NULL, 1);
+	printf("\nPASS ✅ (should not crash)\n");
+
+	// Test 4
+	printf("\nTest 4: Write to file\n");
+
+	fd = open("putendl_test.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		printf("FAIL ❌ (cannot open file)\n");
+		return ;
+	}
+
+	ft_putendl_fd("42 Singapore", fd);
+	close(fd);
+
+	fd = open("putendl_test.txt", O_RDONLY);
+	bytes = read(fd, buffer, sizeof(buffer) - 1);
+	buffer[bytes] = '\0';
+	close(fd);
+
+	printf("Expected     : 42 Singapore\\n\n");
+	printf("Result       : %s", buffer);
+
+	if (strcmp(buffer, "42 Singapore\n") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	remove("putendl_test.txt");
+
+	// Test 5
+	printf("\nTest 5: Special characters\n");
+
+	printf("Expected     : Hello\t42!\\n\n");
+	printf("Result       :\n");
+	ft_putendl_fd("Hello\t42!", 1);
+	printf("PASS ✅ (visual check)\n");
+}
+
+// ======================================== //
+//              ft_putnbr_fd                //
+// ======================================== //
+
+static void	test_ft_putnbr_fd(void)
+{
+	int		fd;
+	char	buffer[50];
+	int		bytes;
+
+	printf("========================================\n");
+	printf("             ft_putnbr_fd               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Positive number\n");
+
+	printf("Expected     : 42\n");
+	printf("Result       : ");
+	ft_putnbr_fd(42, 1);
+	printf("\nPASS ✅ (visual check)\n");
+
+	// Test 2
+	printf("\nTest 2: Negative number\n");
+
+	printf("Expected     : -42\n");
+	printf("Result       : ");
+	ft_putnbr_fd(-42, 1);
+	printf("\nPASS ✅ (visual check)\n");
+
+	// Test 3
+	printf("\nTest 3: Zero\n");
+
+	printf("Expected     : 0\n");
+	printf("Result       : ");
+	ft_putnbr_fd(0, 1);
+	printf("\nPASS ✅ (visual check)\n");
+
+	// Test 4
+	printf("\nTest 4: INT_MAX\n");
+
+	printf("Expected     : 2147483647\n");
+	printf("Result       : ");
+	ft_putnbr_fd(2147483647, 1);
+	printf("\nPASS ✅ (visual check)\n");
+
+	// Test 5
+	printf("\nTest 5: INT_MIN\n");
+
+	printf("Expected     : -2147483648\n");
+	printf("Result       : ");
+	ft_putnbr_fd(-2147483648, 1);
+	printf("\nPASS ✅ (visual check)\n");
+
+	// Test 6
+	printf("\nTest 6: Write to file\n");
+
+	fd = open("putnbr_test.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+	{
+		printf("FAIL ❌ (cannot open file)\n");
+		return ;
+	}
+
+	ft_putnbr_fd(123456, fd);
+	close(fd);
+
+	fd = open("putnbr_test.txt", O_RDONLY);
+	bytes = read(fd, buffer, sizeof(buffer) - 1);
+	buffer[bytes] = '\0';
+	close(fd);
+
+	printf("Expected     : 123456\n");
+	printf("Result       : %s\n", buffer);
+
+	if (strcmp(buffer, "123456") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	remove("putnbr_test.txt");
+}
+
+// ======================================== //
+//                ft_lstnew                 //
+// ======================================== //
+
+static void	test_ft_lstnew(void)
+{
+	t_list	*node;
+	char	*str;
+	int		num;
+
+	printf("========================================\n");
+	printf("               ft_lstnew                \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: String content\n");
+
+	str = "Hello 42!";
+	node = ft_lstnew(str);
+
+	printf("Expected     : Hello 42!\n");
+	printf("Result       : %s\n", (char *)node->content);
+
+	if (strcmp((char *)node->content, str) == 0
+		&& node->next == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(node);
+
+	// Test 2
+	printf("\nTest 2: Integer content\n");
+
+	num = 42;
+	node = ft_lstnew(&num);
+
+	printf("Expected     : 42\n");
+	printf("Result       : %d\n", *(int *)node->content);
+
+	if (*(int *)node->content == 42
+		&& node->next == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(node);
+
+	// Test 3
+	printf("\nTest 3: NULL content\n");
+
+	node = ft_lstnew(NULL);
+
+	printf("Expected     : NULL\n");
+	printf("Result       : %p\n", node->content);
+
+	if (node->content == NULL
+		&& node->next == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(node);
+
+	// Test 4
+	printf("\nTest 4: next pointer\n");
+
+	node = ft_lstnew("42");
+
+	printf("Expected     : NULL\n");
+	printf("Result       : %p\n", (void *)node->next);
+
+	if (node->next == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	free(node);
 }

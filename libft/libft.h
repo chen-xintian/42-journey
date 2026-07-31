@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 15:45:44 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/29 23:54:34 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/31 14:52:18 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 # include <stdint.h>
 
 // --------------------------------LISTS--------------------------------- //
-// typedef struct s_list
-// {
-// 	void			*content;
-// 	struct s_list	*next;
-// }		t_list;
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}					t_list;
 
-// t_list	*ft_lstnew(void *content);
+t_list	*ft_lstnew(void *content);
 // void	ft_lstadd_front(t_list **alst, t_list *new);
 // int		ft_lstsize(t_list *lst);
 // t_list	*ft_lstlast(t_list *lst);
@@ -58,14 +58,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
-// char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-// void	ft_striteri(char *s, void (*f)(unsigned int, char*));
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 
 // ---------------------------FILE DESCRIPTORS----------------------------- //
-// void	ft_putchar_fd(char c, int fd);
-// void	ft_putstr_fd(char *s, int fd);
-// void	ft_putendl_fd(char *s, int fd);
-// void	ft_putnbr_fd(int n, int fd);
+void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putendl_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
 
 // --------------------------------MEMORY--------------------------------- //
 void	*ft_memset(void *b, int c, size_t len);
