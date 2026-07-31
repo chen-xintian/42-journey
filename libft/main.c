@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/31 17:48:45 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/31 17:55:12 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void test_ft_lstsize(void);
 static void test_ft_lstlast(void);
 static void test_ft_lstadd_back(void);
 static void test_ft_lstdelone(void);
+static void test_ft_lstclear(void);
 //---------- Main ----------//
 
 int	main(void)
@@ -105,6 +106,7 @@ int	main(void)
 	test_ft_lstlast();
 	test_ft_lstadd_back();
 	test_ft_lstdelone();
+	test_ft_lstclear();
 	return (0);
 }
 
@@ -3698,4 +3700,90 @@ static void	test_ft_lstdelone(void)
 	/* Clean up manually */
 	free(str);
 	free(node);
+}
+
+// ======================================== //
+//               ft_lstclear                //
+// ======================================== //
+
+static void	test_ft_lstclear(void)
+{
+	t_list	*head;
+
+	printf("========================================\n");
+	printf("              ft_lstclear               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Empty list\n");
+
+	head = NULL;
+	ft_lstclear(&head, del_content);
+
+	printf("Expected     : NULL\n");
+	printf("Result       : %p\n", (void *)head);
+
+	if (head == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: One node\n");
+
+	head = ft_lstnew(ft_strdup("Hello"));
+
+	ft_lstclear(&head, del_content);
+
+	printf("Expected     : NULL\n");
+	printf("Result       : %p\n", (void *)head);
+
+	if (head == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 3
+	printf("\nTest 3: Multiple nodes\n");
+
+	head = ft_lstnew(ft_strdup("One"));
+	head->next = ft_lstnew(ft_strdup("Two"));
+	head->next->next = ft_lstnew(ft_strdup("Three"));
+
+	ft_lstclear(&head, del_content);
+
+	printf("Expected     : NULL\n");
+	printf("Result       : %p\n", (void *)head);
+
+	if (head == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 4
+	printf("\nTest 4: NULL list pointer\n");
+
+	ft_lstclear(NULL, del_content);
+
+	printf("Expected     : No crash\n");
+	printf("PASS ✅\n");
+
+	// Test 5
+	printf("\nTest 5: NULL del function\n");
+
+	head = ft_lstnew(ft_strdup("42"));
+
+	ft_lstclear(&head, NULL);
+
+	printf("Expected     : List unchanged\n");
+	printf("Result       : %s\n", (char *)head->content);
+
+	if (head != NULL && strcmp(head->content, "42") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	/* Manual cleanup */
+	free(head->content);
+	free(head);
 }
