@@ -6,7 +6,7 @@
 /*   By: chenx <chenx@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/21 16:55:29 by chenx             #+#    #+#             */
-/*   Updated: 2026/07/31 17:58:35 by chenx            ###   ########.fr       */
+/*   Updated: 2026/07/31 18:03:52 by chenx            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void test_ft_lstadd_back(void);
 static void test_ft_lstdelone(void);
 static void test_ft_lstclear(void);
 static void test_ft_lstiter(void);
+static void test_ft_lstmap(void);
 //---------- Main ----------//
 
 int	main(void)
@@ -109,6 +110,7 @@ int	main(void)
 	test_ft_lstdelone();
 	test_ft_lstclear();
 	test_ft_lstiter();
+	test_ft_lstmap();
 	return (0);
 }
 
@@ -3899,3 +3901,139 @@ static void	test_ft_lstiter(void)
 	printf("Expected     : No crash\n");
 	printf("PASS ✅\n");
 }
+
+// ======================================== //
+//                ft_lstmap                 //
+// ======================================== //
+
+static void	*map_duplicate_upper(void *content)
+{
+	char	*src;
+	char	*dup;
+	size_t	i;
+
+	src = (char *)content;
+	dup = ft_strdup(src);
+	if (dup == NULL)
+		return (NULL);
+	i = 0;
+	while (dup[i])
+	{
+		if (dup[i] >= 'a' && dup[i] <= 'z')
+			dup[i] -= 32;
+		i++;
+	}
+	return (dup);
+}
+
+static void	map_delete_content(void *content)
+{
+	free(content);
+}
+
+static void	test_ft_lstmap(void)
+{
+	t_list	*head;
+	t_list	*new;
+
+	printf("========================================\n");
+	printf("                ft_lstmap               \n");
+	printf("========================================\n");
+
+	// Test 1
+	printf("\nTest 1: Empty list\n");
+
+	head = NULL;
+	new = ft_lstmap(head, map_duplicate_upper, map_delete_content);
+
+	printf("Expected     : NULL\n");
+	printf("Result       : %p\n", (void *)new);
+
+	if (new == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	// Test 2
+	printf("\nTest 2: One node\n");
+
+	head = ft_lstnew(ft_strdup("hello"));
+
+	new = ft_lstmap(head, map_duplicate_upper, map_delete_content);
+
+	printf("Original     : %s\n", (char *)head->content);
+	printf("Mapped       : %s\n", (char *)new->content);
+
+	if (strcmp(head->content, "hello") == 0
+		&& strcmp(new->content, "HELLO") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	ft_lstclear(&head, map_delete_content);
+	ft_lstclear(&new, map_delete_content);
+
+	// Test 3
+	printf("\nTest 3: Three nodes\n");
+
+	head = ft_lstnew(ft_strdup("one"));
+	head->next = ft_lstnew(ft_strdup("two"));
+	head->next->next = ft_lstnew(ft_strdup("three"));
+
+	new = ft_lstmap(head, map_duplicate_upper, map_delete_content);
+
+	printf("Original     : %s %s %s\n",
+		(char *)head->content,
+		(char *)head->next->content,
+		(char *)head->next->next->content);
+
+	printf("Mapped       : %s %s %s\n",
+		(char *)new->content,
+		(char *)new->next->content,
+		(char *)new->next->next->content);
+
+	if (strcmp(new->content, "ONE") == 0
+		&& strcmp(new->next->content, "TWO") == 0
+		&& strcmp(new->next->next->content, "THREE") == 0)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	ft_lstclear(&head, map_delete_content);
+	ft_lstclear(&new, map_delete_content);
+
+	// Test 4
+	printf("\nTest 4: NULL function\n");
+
+	head = ft_lstnew(ft_strdup("hello"));
+
+	new = ft_lstmap(head, NULL, map_delete_content);
+
+	printf("Expected     : NULL\n");
+	printf("Result       : %p\n", (void *)new);
+
+	if (new == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	ft_lstclear(&head, map_delete_content);
+
+	// Test 5
+	printf("\nTest 5: NULL del function\n");
+
+	head = ft_lstnew(ft_strdup("hello"));
+
+	new = ft_lstmap(head, map_duplicate_upper, NULL);
+
+	printf("Expected     : NULL\n");
+	printf("Result       : %p\n", (void *)new);
+
+	if (new == NULL)
+		printf("PASS ✅\n");
+	else
+		printf("FAIL ❌\n");
+
+	ft_lstclear(&head, map_delete_content);
+}
+
