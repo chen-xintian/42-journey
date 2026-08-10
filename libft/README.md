@@ -263,7 +263,7 @@ The functions can be tested by compiling a custom test program together with the
 For example:
 
 ```bash
-cc main.c libft.a -o test
+cc main.c libft.a -o test -lbsd
 ./test
 ```
 
@@ -312,7 +312,6 @@ man write
 ### Linked Lists
 
 * GeeksforGeeks — Linked List data structures and operations
-* TutorialsPoint — C Linked Lists
 * C programming references covering structures, pointers, and dynamic memory allocation
 
 ### 42 Resources
