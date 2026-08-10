@@ -1,10 +1,10 @@
-*This project has been created as part of the 42 curriculum by <xintchen>.*
+*This project has been created as part of the 42 curriculum by xintchen.*
 
 # libft
 
 ## Description
 
-`libft` is a custom C library created as part of the 42 curriculum. The goal of this project is to recreate a collection of commonly used functions from the standard C library, while also developing additional utility functions for string manipulation, memory management, conversion, file-descriptor output, and linked-list operations.
+`libft` is a custom C library created as part of the 42 curriculum. The goal of this project is to recreate a collection of commonly used functions from the standard C library, while also developing additional utility functions for string manipulation, memory management, number conversion, file-descriptor output, and linked-list operations.
 
 The project provides a deeper understanding of fundamental C programming concepts, including:
 
@@ -14,12 +14,13 @@ The project provides a deeper understanding of fundamental C programming concept
 * Arrays and memory blocks
 * Type casting
 * Function pointers
+* Structures
 * Linked lists
 * Dynamic memory management
 * Error handling and memory leaks
 * Makefiles and static libraries
 
-The resulting library, `libft.a`, can be reused in later 42 projects.
+The resulting static library, `libft.a`, can be reused in later 42 projects.
 
 ---
 
@@ -88,7 +89,7 @@ Functions for writing characters, strings, numbers, and lines to a specified fil
 
 ### Linked List Functions
 
-The bonus part of the project implements a singly linked list using the `t_list` structure.
+The library also implements a singly linked list using the `t_list` structure.
 
 * `ft_lstnew`
 * `ft_lstadd_front`
@@ -126,7 +127,7 @@ This allows the program to use the functions implemented in `libft`.
 
 ### Linked List Structure
 
-The linked-list portion of the library uses the following structure:
+The linked-list functions use the following structure:
 
 ```c
 typedef struct s_list
@@ -149,14 +150,27 @@ A list can therefore be represented as:
 
 Unlike an array, linked-list nodes do not need to occupy consecutive memory locations. Each node stores the address of the next node, allowing the list to be dynamically connected.
 
+The linked-list functions support common operations such as:
+
+* Creating nodes
+* Adding nodes to the front or back
+* Finding the last node
+* Counting nodes
+* Iterating through a list
+* Deleting individual nodes
+* Clearing an entire list
+* Creating a transformed copy of a list
+
 ### Memory Management
 
-Many functions in `libft` allocate memory dynamically using `malloc`. Functions that create new strings or lists are responsible for allocating enough memory for their results.
+Many functions in `libft` allocate memory dynamically using `malloc`. Functions that create new strings or list nodes are responsible for allocating enough memory for their results.
 
 For example:
 
 ```c
-char *str = ft_strdup("Hello");
+char	*str;
+
+str = ft_strdup("Hello");
 ```
 
 The returned string is dynamically allocated and must eventually be freed:
@@ -166,6 +180,8 @@ free(str);
 ```
 
 The linked-list functions similarly require careful memory management, particularly when deleting individual nodes or clearing an entire list.
+
+Functions involving dynamic allocation also need to handle allocation failures appropriately and avoid memory leaks.
 
 ---
 
@@ -192,14 +208,6 @@ This creates:
 libft.a
 ```
 
-### Bonus Functions
-
-To compile the bonus linked-list functions:
-
-```bash
-make bonus
-```
-
 ### Clean Object Files
 
 To remove the generated object files:
@@ -210,7 +218,7 @@ make clean
 
 ### Remove All Generated Files
 
-To remove object files and the static library:
+To remove the object files and static library:
 
 ```bash
 make fclean
@@ -238,7 +246,7 @@ The header file should be included in the source file:
 #include "libft.h"
 ```
 
-Then the functions can be called normally:
+The functions can then be called normally:
 
 ```c
 int	len;
@@ -272,7 +280,7 @@ All heap blocks were freed -- no leaks are possible
 ERROR SUMMARY: 0 errors from 0 contexts
 ```
 
-External testers can also be used to check the implementation against the expected behaviour of the functions.
+External testers can also be used to compare the implementations against the expected behaviour of the Libft functions.
 
 ---
 
@@ -280,9 +288,9 @@ External testers can also be used to check the implementation against the expect
 
 ### C Documentation
 
-* `man` pages for standard C library functions
+* `man` pages for standard C library and system functions
 * GNU C Library documentation
-* C language documentation and references
+* C language references and documentation
 
 Useful manual pages include:
 
@@ -292,6 +300,7 @@ man memcpy
 man memmove
 man calloc
 man malloc
+man free
 man write
 ```
 
@@ -309,26 +318,26 @@ man write
 ### 42 Resources
 
 * 42 Libft subject PDF
-* 42 Norm / Norminette documentation
+* 42 Norminette documentation
 * 42 community resources and peer-reviewed explanations of Libft concepts
 
 ### AI Usage
 
-AI tools were used as a supplementary learning and debugging resource during the development of this project.
+AI tools were used as a supplementary learning, testing, and debugging resource during the development of this project.
 
-Specifically, AI assistance was used for:
+AI assistance was used for:
 
-* Explaining C programming concepts such as pointers, pointer-to-pointer variables, `sizeof`, `%zu`, memory allocation, and linked-list structures.
+* Explaining C programming concepts such as pointers, pointer-to-pointer variables, `sizeof`, memory allocation, and linked-list structures.
 * Clarifying the behaviour and expected requirements of functions in the Libft subject.
 * Reviewing implementations for readability, efficiency, and compatibility with the 42 coding style.
-* Suggesting and explaining helper functions when implementations exceeded the Norminette line limit.
+* Suggesting and explaining helper functions when implementations exceeded Norminette's line and function constraints.
 * Creating custom `main.c` test functions for individual Libft functions.
 * Suggesting edge cases to include during testing.
 * Explaining compiler, linker, and Valgrind error messages.
 * Troubleshooting issues such as undefined references, uninitialised values, memory leaks, and conflicting function definitions.
-* Explaining linked-list operations and the use of function pointers in functions such as `ft_lstiter` and `ft_lstmap`.
+* Explaining linked-list operations and the use of function pointers in functions such as `ft_lstiter` and `ft_lstmap.
 
-AI-generated suggestions were used as guidance and were reviewed, adapted, tested, and implemented manually. The final implementations were compiled and tested by the author.
+AI-generated suggestions were used as guidance and were reviewed, adapted, compiled, and tested manually. The final implementations were written and verified by the author.
 
 ---
 
@@ -341,10 +350,10 @@ Key implementation choices include:
 * Using `size_t` for string lengths, indexes, and memory sizes where appropriate.
 * Using `unsigned char` for byte-level memory comparisons and manipulation.
 * Using `long` internally where necessary to safely handle integer conversion edge cases in `ft_itoa`.
-* Using helper functions for complex functions such as `ft_split` and `ft_itoa` to improve readability and comply with Norminette's line and function constraints.
+* Using helper functions for more complex functions such as `ft_split` and `ft_itoa` to improve readability and comply with Norminette's constraints.
 * Using function pointers for callback-based functions such as `ft_strmapi`, `ft_striteri`, `ft_lstiter`, and `ft_lstmap`.
 * Carefully freeing dynamically allocated memory when an allocation fails.
-* Using a static library (`libft.a`) so that the library can be reused in future projects.
+* Using a static library (`libft.a`) so that the library can be reused in future 42 projects.
 
 ---
 
@@ -357,9 +366,9 @@ libft/
 ├── Makefile
 ├── README.md
 ├── libft.h
-├── libft.a
 ├── ft_*.c
-└── ...
+├── ft_*.o
+└── libft.a
 ```
 
 The `.c` files contain the individual function implementations, while `libft.h` contains the function prototypes and the linked-list structure definition.
@@ -386,4 +395,4 @@ Through this project, I developed a stronger understanding of:
 * Debugging and testing
 * Following strict coding standards
 
-`libft` serves as a foundation for future 42 projects where these concepts are repeatedly used.
+`libft` serves as a foundation for future 42 projects, where these concepts and functions will be repeatedly used.
