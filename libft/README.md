@@ -378,7 +378,7 @@ The Makefile automates compilation and creation of the static library.
 
 ## Learning Outcomes
 
-Through this project, I developed a stronger understanding of:
+Through this project, one should develop a stronger understanding of:
 
 * C syntax and compilation
 * Pointers and pointer arithmetic
