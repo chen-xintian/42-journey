@@ -1,6 +1,6 @@
-*This project has been created as part of the 42 curriculum by xintchen.*
-
 # libft
+
+*This project has been created as part of the 42 curriculum by xintchen.*
 
 ## Description
 
@@ -189,10 +189,10 @@ Functions involving dynamic allocation also need to handle allocation failures a
 
 ### Compilation
 
-Clone the repository and enter the project directory:
+Clone the repository into a directory named `libft` and enter the project directory:
 
 ```bash
-git clone <repository-url>
+git clone <repository-url> libft
 cd libft
 ```
 
@@ -270,7 +270,7 @@ cc main.c libft.a -o test -lbsd
 Memory leaks and invalid memory accesses can be checked using Valgrind:
 
 ```bash
-valgrind --leak-check=full ./test
+valgrind --leak-check=full --show-leak-kinds=all ./test
 ```
 
 A successful test should ideally end with:
@@ -334,7 +334,7 @@ AI assistance was used for:
 * Suggesting edge cases to include during testing.
 * Explaining compiler, linker, and Valgrind error messages.
 * Troubleshooting issues such as undefined references, uninitialised values, memory leaks, and conflicting function definitions.
-* Explaining linked-list operations and the use of function pointers in functions such as `ft_lstiter` and `ft_lstmap.
+* Explaining linked-list operations and the use of function pointers in functions such as `ft_lstiter` and `ft_lstmap`.
 
 AI-generated suggestions were used as guidance and were reviewed, adapted, compiled, and tested manually. The final implementations were written and verified by the author.
 
@@ -365,9 +365,7 @@ libft/
 ├── Makefile
 ├── README.md
 ├── libft.h
-├── ft_*.c
-├── ft_*.o
-└── libft.a
+└── ft_*.c
 ```
 
 The `.c` files contain the individual function implementations, while `libft.h` contains the function prototypes and the linked-list structure definition.
@@ -378,7 +376,7 @@ The Makefile automates compilation and creation of the static library.
 
 ## Learning Outcomes
 
-Through this project, one should develop a stronger understanding of:
+Through this project, a stronger understanding can be developed in the following areas:
 
 * C syntax and compilation
 * Pointers and pointer arithmetic
@@ -394,4 +392,4 @@ Through this project, one should develop a stronger understanding of:
 * Debugging and testing
 * Following strict coding standards
 
-`libft` serves as a foundation for future 42 projects, where these concepts and functions will be repeatedly used.
+`libft` serves as a foundation for future 42 projects, where these concepts and functions can be repeatedly applied.
